@@ -5928,6 +5928,24 @@ perleval({expr})					*perleval()*
 <			[1, 2, 3, 4]
 		{only available when compiled with the |+perl| feature}
 
+popuplist( {list} [, {string} [, {dict}]])		*popuplist()*
+		Display the items from the {list} in a popup list box with the
+		optional {string} as the list box title and with additional
+		options in {dict}.
+		When the popup list box is closed, the function returns a
+		dictionary with the current state of the popup list and the
+		command that terminated it.
+		See |puls-providers| and |puls-vimlist|.
+		{only available when compiled with the |+popuplist| feature}
+
+popuplist( {string} [, {string} [, {dict}]])
+		Display a popup list box with the items created from internal
+		Vim structures like the list of buffers, Vim menus, error 
+		lists or location lists.
+		See |puls-providers|, |puls-buffers|, |puls-menus|, and
+		|puls-quickfix|.
+		{only available when compiled with the |+popuplist| feature}
+
 pow({x}, {y})						*pow()*
 		Return the power of {x} to the exponent {y} as a |Float|.
 		{x} and {y} must evaluate to a |Float| or a |Number|.
@@ -8416,6 +8434,7 @@ packages		Compiled with |packages| support.
 path_extra		Compiled with up/downwards search in 'path' and 'tags'
 perl			Compiled with Perl interface.
 persistent_undo		Compiled with support for persistent undo history.
+popuplist		Compiled with support for the popup list.
 postscript		Compiled with PostScript file printing.
 printer			Compiled with |:hardcopy| support.
 profile			Compiled with |:profile| support.

@@ -41,6 +41,7 @@
 #		--enable-luainterp	for Lua interpreter
 #		--enable-mzschemeinterp	for MzScheme interpreter
 #		--enable-perlinterp	for Perl interpreter
+#		--enable-popuplist	for popup list
 #		--enable-python3interp	for Python3 interpreter
 #		--enable-pythoninterp	for Python interpreter
 #		--enable-rubyinterp	for Ruby interpreter
@@ -379,7 +380,7 @@ CClink = $(CC)
 #CONF_OPT_GUI = --enable-gui=carbon
 
 # Uncomment this line to run an individual test with gvim.
-#GUI_TESTARG = GUI_FLAG=-g 
+#GUI_TESTARG = GUI_FLAG=-g
 
 # DARWIN - detecting Mac OS X
 # Uncomment this line when you want to compile a Unix version of Vim on
@@ -432,6 +433,17 @@ CClink = $(CC)
 # This requires at least "small" features, "tiny" doesn't work.
 #CONF_OPT_PERL = --enable-perlinterp
 #CONF_OPT_PERL = --enable-perlinterp=dynamic
+
+# POPUP LIST
+# Uncomment this when you want to include the popuplist function.
+# NOTE: if the files popupls_.ci or popupls_.h are missing, run `python mmoocc.py`.
+# NOTE: the popuplist will not compile in small and tiny builds because
+# it requires FEAT_EVAL.
+# NOTE: the built-in providers to display Vim menus and the buffer list
+# will be added. To remove them from the build, uncomment additional lines.
+#CONF_OPT_POPUPLIST = --enable-popuplist
+#CONF_OPT_POPUPLIST = $(CONF_OPT_POPUPLIST) --enable-puls-buffers=no
+#CONF_OPT_POPUPLIST = $(CONF_OPT_POPUPLIST) --enable-puls-menus=no
 
 # PYTHON
 # Uncomment this when you want to include the Python interface.
@@ -1648,6 +1660,7 @@ OBJ_COMMON = \
 	objects/option.o \
 	objects/os_unix.o \
 	objects/pathdef.o \
+	objects/popuplst.o \
 	objects/popupmnu.o \
 	objects/quickfix.o \
 	objects/regexp.o \
@@ -1777,6 +1790,7 @@ PRO_AUTO = \
 	option.pro \
 	os_mac_conv.pro \
 	os_unix.pro \
+	popuplst.pro \
 	popupmnu.pro \
 	pty.pro \
 	quickfix.pro \
@@ -1835,8 +1849,8 @@ config auto/config.mk: auto/configure config.mk.in config.h.in
 		CC="$(CC)" CPPFLAGS="$(CPPFLAGS)" CFLAGS="$(CFLAGS)" \
 		LDFLAGS="$(LDFLAGS)" $(CONF_SHELL) srcdir="$(srcdir)" \
 		./configure $(CONF_OPT_GUI) $(CONF_OPT_X) $(CONF_OPT_XSMP) \
-		$(CONF_OPT_DARWIN) $(CONF_OPT_FAIL) \
-		$(CONF_OPT_PERL) $(CONF_OPT_PYTHON) $(CONF_OPT_PYTHON3) \
+		$(CONF_OPT_DARWIN) $(CONF_OPT_PERL) $(CONF_OPT_FAIL) $(CONF_OPT_POPUPLIST) \
+		$(CONF_OPT_PYTHON) $(CONF_OPT_PYTHON3) \
 		$(CONF_OPT_TCL) $(CONF_OPT_RUBY) $(CONF_OPT_NLS) \
 		$(CONF_OPT_CSCOPE) $(CONF_OPT_MULTIBYTE) $(CONF_OPT_INPUT) \
 		$(CONF_OPT_OUTPUT) $(CONF_OPT_GPM) $(CONF_OPT_WORKSHOP) \
@@ -3163,6 +3177,9 @@ objects/pathdef.o: auto/pathdef.c
 
 objects/pty.o: pty.c
 	$(CCC) -o $@ pty.c
+
+objects/popuplst.o: popuplst.c puls_st.c puls_tw.c puls_pb.c puls_pm.c puls_pq.c popupls_.ci
+	$(CCC) -o $@ popuplst.c
 
 objects/popupmnu.o: popupmnu.c
 	$(CCC) -o $@ popupmnu.c

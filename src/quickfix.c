@@ -82,7 +82,7 @@ struct qf_info_S
     int			  qf_multiscan;
 };
 
-static qf_info_T ql_info;	/* global quickfix list */
+/*static*/ qf_info_T ql_info;	/* global quickfix list */
 
 #define FMT_PATTERNS 10		/* maximum number of % recognized */
 

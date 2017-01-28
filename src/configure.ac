@@ -950,6 +950,46 @@ if test "$enable_mzschemeinterp" = "yes"; then
   AC_SUBST(MZSCHEME_MZC)
 fi
 
+AC_MSG_CHECKING(--enable-popuplist argument)
+AC_ARG_ENABLE(popuplist,
+	[  --enable-popuplist[=OPTS]     Include Popup List.  [default=no] [OPTS=no/yes]], ,
+	[enable_popuplist="yes"])
+  if test "$enable_popuplist" = "yes"; then
+    if test "x$features" = "xtiny" || test "x$features" = "xsmall"; then
+      dnl FEAT_EVAL is required for the popuplist
+      enable_popuplist="no"
+      msg_puls_disabled="yes"
+    fi
+  fi
+AC_MSG_RESULT($enable_popuplist)
+if test "x$msg_puls_disabled" = "xyes" ; then
+  echo 'popuplist is disabled for features=tiny,small (requires FEAT_EVAL)'
+fi
+
+if test "$enable_popuplist" = "yes"; then
+  AC_DEFINE(FEAT_POPUPLIST)
+
+  AC_MSG_CHECKING(--enable-puls-buffers argument)
+  AC_ARG_ENABLE(puls_buffers,
+	[  --enable-puls-buffers[=OPTS]  Include Popup List "buffers" provider.  [default=yes] [OPTS=no/yes]], ,
+	[enable_puls_buffers="yes"])
+  AC_MSG_RESULT($enable_puls_buffers)
+
+  if test "$enable_puls_buffers" = "yes"; then
+    AC_DEFINE(FEAT_POPUPLIST_BUFFERS)
+  fi
+
+  AC_MSG_CHECKING(--enable-puls-menus argument)
+  AC_ARG_ENABLE(puls_menus,
+	[  --enable-puls-menus[=OPTS]  Include Popup List "menus" provider.  [default=yes] [OPTS=no/yes]], ,
+	[enable_puls_menus="yes"])
+  AC_MSG_RESULT($enable_puls_menus)
+
+  if test "$enable_puls_menus" = "yes"; then
+    AC_DEFINE(FEAT_POPUPLIST_MENUS)
+  fi
+fi
+
 
 AC_MSG_CHECKING(--enable-perlinterp argument)
 AC_ARG_ENABLE(perlinterp,

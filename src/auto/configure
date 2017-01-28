@@ -801,6 +801,9 @@ with_lua_prefix
 with_luajit
 enable_mzschemeinterp
 with_plthome
+enable_popuplist
+enable_puls_buffers
+enable_puls_menus
 enable_perlinterp
 enable_pythoninterp
 with_python_config_dir
@@ -1482,6 +1485,9 @@ Optional Features:
   --disable-xsmp-interact Disable XSMP interaction
   --enable-luainterp=OPTS     Include Lua interpreter.  default=no OPTS=no/yes/dynamic
   --enable-mzschemeinterp   Include MzScheme interpreter.
+  --enable-popuplist=OPTS     Include Popup List.  default=no OPTS=no/yes
+  --enable-puls-buffers=OPTS  Include Popup List "buffers" provider.  default=yes OPTS=no/yes
+  --enable-puls-menus=OPTS  Include Popup List "menus" provider.  default=yes OPTS=no/yes
   --enable-perlinterp=OPTS     Include Perl interpreter.  default=no OPTS=no/yes/dynamic
   --enable-pythoninterp=OPTS   Include Python interpreter. default=no OPTS=no/yes/dynamic
   --enable-python3interp=OPTS   Include Python3 interpreter. default=no OPTS=no/yes/dynamic
@@ -5606,6 +5612,66 @@ rm -f core conftest.err conftest.$ac_objext \
 
 
 
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-popuplist argument" >&5
+$as_echo_n "checking --enable-popuplist argument... " >&6; }
+# Check whether --enable-popuplist was given.
+if test "${enable_popuplist+set}" = set; then :
+  enableval=$enable_popuplist;
+else
+  enable_popuplist="yes"
+fi
+
+  if test "$enable_popuplist" = "yes"; then
+    if test "x$features" = "xtiny" || test "x$features" = "xsmall"; then
+            enable_popuplist="no"
+      msg_puls_disabled="yes"
+    fi
+  fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_popuplist" >&5
+$as_echo "$enable_popuplist" >&6; }
+if test "x$msg_puls_disabled" = "xyes" ; then
+  echo 'popuplist is disabled for features=tiny,small (requires FEAT_EVAL)'
+fi
+
+if test "$enable_popuplist" = "yes"; then
+  $as_echo "#define FEAT_POPUPLIST 1" >>confdefs.h
+
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-puls-buffers argument" >&5
+$as_echo_n "checking --enable-puls-buffers argument... " >&6; }
+  # Check whether --enable-puls_buffers was given.
+if test "${enable_puls_buffers+set}" = set; then :
+  enableval=$enable_puls_buffers;
+else
+  enable_puls_buffers="yes"
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_puls_buffers" >&5
+$as_echo "$enable_puls_buffers" >&6; }
+
+  if test "$enable_puls_buffers" = "yes"; then
+    $as_echo "#define FEAT_POPUPLIST_BUFFERS 1" >>confdefs.h
+
+  fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking --enable-puls-menus argument" >&5
+$as_echo_n "checking --enable-puls-menus argument... " >&6; }
+  # Check whether --enable-puls_menus was given.
+if test "${enable_puls_menus+set}" = set; then :
+  enableval=$enable_puls_menus;
+else
+  enable_puls_menus="yes"
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_puls_menus" >&5
+$as_echo "$enable_puls_menus" >&6; }
+
+  if test "$enable_puls_menus" = "yes"; then
+    $as_echo "#define FEAT_POPUPLIST_MENUS 1" >>confdefs.h
+
+  fi
 fi
 
 

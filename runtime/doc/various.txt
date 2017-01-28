@@ -400,6 +400,7 @@ N  *+path_extra*	Up/downwards search in 'path' and 'tags'
 m  *+perl*		Perl interface |perl|
 m  *+perl/dyn*		Perl interface |perl-dynamic| |/dyn|
 N  *+persistent_undo*	Persistent undo |undo-persistence|
+m  *+popuplist*		|popuplist()| function
    *+postscript*	|:hardcopy| writes a PostScript file
 N  *+printer*		|:hardcopy| command
 H  *+profile*		|:profile| command

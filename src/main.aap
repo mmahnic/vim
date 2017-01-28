@@ -324,6 +324,7 @@ Source =
         option.c
         os_unix.c
         auto/pathdef.c
+        popuplst.c
         popupmnu.c
         quickfix.c
         regexp.c
