@@ -340,6 +340,15 @@
 /* Define for linking via dlopen() or LoadLibrary() */
 #undef DYNAMIC_PERL
 
+/* Define if you want to include the popup list. */
+#undef FEAT_POPUPLIST
+
+/* Define if you want to include the "buffers" provider for the popup list. */
+#undef FEAT_POPUPLIST_BUFFERS
+
+/* Define if you want to include the "menus" provider for the popup list. */
+#undef FEAT_POPUPLIST_MENUS
+
 /* Define if you want to include the Python interpreter. */
 #undef FEAT_PYTHON
 

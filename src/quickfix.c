@@ -111,7 +111,7 @@ struct qf_info_S
     int		qf_bufnr;	    // quickfix window buffer number
 };
 
-static qf_info_T ql_info;	// global quickfix list
+/*static*/ qf_info_T ql_info;	// global quickfix list
 static int_u last_qf_id = 0;	// Last used quickfix list id
 
 #define FMT_PATTERNS 11		// maximum number of % recognized

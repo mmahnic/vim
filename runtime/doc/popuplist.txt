@@ -1,0 +1,706 @@
+*popuplist.txt*		Popup List			Last Change: June 2011
+
+
+		POPUPLIST REFERENCE MANUAL
+
+Author:		Marko Mahnič
+
+		*popuplist*   *puls*
+
+==============================================================================
+Contents
+    PROGRAMMING INTERFACE				|puls-interface|
+    Common options					|puls-common-options|
+    Return values					|puls-return-values|
+    Popup list items					|puls-items|
+    Popup list modes					|puls-modes|
+    Text matchers					|puls-matchers|
+    Popup list commands					|puls-commads|
+    User defined commands				|puls-user-commands|
+    Popup list keymaps					|puls-keymaps|
+    Default popup list keymaps				|puls-default-keymaps|
+    Item providers					|puls-providers|
+      Buffer-list item provider				|puls-buffers|
+      Menu item provider				|puls-menus|
+      QuickFix item providers				|puls-quickfix|
+    The colors used in the popup list			|puls-colors|
+
+==============================================================================
+
+The Popup List can be displayed when the |+popuplist| feature is present.
+
+==============================================================================
+PROGRAMMING INTERFACE					*puls-interface*
+
+The popup list box is displayed with the function |popuplist()| which accepts
+up to three parameters and returns a dictionary with the state of the popup
+list.  The first parameter describes the items to display.  If it is a list,
+the items from the list are displayed.  If the first parameter is a string it
+identifies an internal list like a menu or the list of buffers (see
+|puls-providers|).  The second parameter is a string with the title of the
+popup list.  The third parameter is a dictionary with options that control the
+behaviour of the popup list (see |puls-common-options|).
+
+The dictionary returned by the popuplist() function contains the action that
+caused the function to exit and, depending on the action, the index of the
+currently selected item and the list with the indices of marked items (see
+|puls-return-values|).
+
+In the following example the popup list will display three items, it will
+display the title "Example" on the top border of the frame and the second item
+will be initially selected: >
+
+    let items = ['Item 1', 'Item 2', 'Item 3']
+    let opts = {'current': 1 }
+    let rv = popuplist(items, 'Example', opts)
+    if rv.status == 'accept'
+      echo items[rv.current]
+    endif
+<
+
+Common options						*puls-common-options*
+
+The following common options are recognized by the popuplist() function:
+
+  "current"		The index of the item that is selected when the list
+			is initially displayed.
+
+  "mode"		The mode of operation that is active when the list is
+			displayed. The following values are valid: "normal",
+			"filter", "isearch", "shortcut". See |puls-modes|.
+
+  "commands"		A dictionary where the key of each entry is a command
+			name and the value is the name of a Vim function to
+			call. See |puls-commands|.
+
+  "keymap"		A dictionary where the key of each entry is the name
+			of a mode and the value is a dictionary that maps key
+			sequences to popup list commands. See |puls-keymaps|
+			and |puls-modes|.
+
+  "nextcmd"		A command that will be executed on startup. This can be
+			used to fill the list incrementally.
+			See |puls-commands|, |puls-incremental|.
+
+  "pos"			Set the position of the list box.
+			See |puls-position|.
+
+  "columns"		True if the items should be displayed in two columns.
+			The columns are separated by a tab character.  The
+			width of the first column is calculated to match the
+			largest item width. The maximum width of the first
+			column is 4/10 of the maximum allowed list box width.
+
+  "highlight"		A text expression that will be highlighted in the
+			displayed items. See |puls-matchers|.
+
+  "highlight_matcher"	The text matcher that is used to highlight the text
+			defined in "highlight". See |puls-matchers|.
+
+  "isearch"		A text expression for the isearch mode.
+			See |puls-matchers|.
+
+  "isearch_matcher"	The text matcher that is used in isearch mode.
+			See |puls-matchers|.
+
+  "filter"		A text expression for the filter mode.
+			See |puls-matchers|.
+
+  "filter_matcher"	The text matcher that is used in filter mode.
+			See |puls-matchers|.
+
+Additional options are recognized by specialized list item providers.
+See |puls-providers|.
+
+
+Return values						*puls-return-values*
+
+The dictionary returned by the popuplist() function can have the following
+entries:
+
+  "status"		The status with which the function ended. Usually one
+			of "accept", "cancel", "done" or "quit".  Additional
+			return status values can be defined.  
+			See |puls-status|.
+
+  "mode"		The mode of operation that the popup list was in when
+			the function returned. See |puls-modes|.
+
+  "current"		The index of the current item in the list.
+			|fn-puls-rv1|
+
+  "marked"		A list with indices of the items that are marked. It
+			is present only if the list is terminated with the
+			status "accept". |fn-puls-rv1|
+
+  "state"		Additional information about the state of the popup
+			list.
+
+*fn-puls-rv1* NOTE: When the internal list of buffers is displayed the fields
+"current" and "marked" contain the numbers of the buffers instead of indices.
+
+============================================================
+OUTLINE
+[...?] tasks in parenthesis describe unimplemented features.
+============================================================
+
+Popup list items					*puls-items*
+
+The popuplist displays a list of string items. Items in a list can be
+disabled, like actions that are not available from the menu in the selected
+menu mode. When a disabled item is selected, the "accept" action has no
+effect.
+
+							*puls-titles*
+Items can be marked as titles in which case they are treated specially by
+the filtering subsystem. The title items mark the beginning of a new group
+of items.  All the normal items that follow a title item are considered to
+be its children.  For example when doing a grep on multiple files the
+filenames wold be marked as titles and all the matches in a file would
+follow the title.  Normally the filtered items are sorted by the score
+that the selected text matcher assigns to them. When there are title items
+in the list, the filtered items are displayed differently. First every
+title gets the score of its best scored child. Then the groups of items
+formed from a title and its children are sorted by the score of the title
+and finally the children in a group are sorted by their score. The titles
+that have no matching children are hidden even if there is a match in the
+title.
+
+## To switch between normal and title display the command
+## "filter-toggle-titles" can be used which is normally mapped to <c-t>.
+
+## What kind of items can a list contain (disabled, titles, separators)? How are
+## the items displayed? How are the items filtered/searched?
+
+
+Popup list modes					*puls-modes*
+
+Like Vim itself the popup list operates different modes. Usually the "normal"
+mode is active when the list is first displayed. It is an equivalent of the
+Vim normal mode. In "filter" mode only the items that match the filtering
+condition are displayed. In "isearch" mode the first item that matches the
+search condition is displayed and the match highlighted -- similar to
+'incsearch'. Finally in "shortcut" mode an item with the shortcut character
+that matches the entered character is selected and when it is the only item
+with the entered shortcut, it is also activated. Shortcut mode is best suited
+for menus.
+
+In filter and isearch modes an input field is displayed on the bottom border
+of the frame. The field supports only basic editing: the last entered
+character can be deleted with <backspace> and the whole field can be cleared
+with <c-u>.  While the input field is active the matching algorithm can be
+selected with <c-f>. See |puls-matchers| for the descriptions of available
+matching algorithms.
+
+Every mode has a keymap associated with it. A key can be mapped to a popup
+list internal command or to a command defined by the user. The commands and
+keymaps are defined in the option parameter of the popuplist() function: >
+
+    function DoIt(command, state)
+    endfunc
+    let commands = { "do-it": "g:DoIt" }
+    let km_norm  = { "<c-d>": "do-it" }
+    let opts = { "commands": commands, "keymap": { "normal": km_norm }}
+    let rv = popuplist(items, "title", opts)
+<
+In this example the command "do-it" is mapped on the key <c-d> in normal mode.
+When the command is executed the function DoIt is called with the current
+state of the popup list.
+
+Commands and keymaps are further explained in |puls-commands|, |puls-keymaps|
+and |puls-user-commands|.
+
+## What are modes? What modes are available? What is special about every
+## mode? How can one customize a mode: keymaps, commands? [How to add new
+## modes?] What does the main loop do (|puls-loop|)? What commands are used
+## to switch the current mode? What is the input line and how to edit the
+## input? What is filtering and what is searching? Link to |puls-matchers|.
+
+
+Text matchers						*puls-matchers*
+
+Text matchers are algorithms that are used to search for text expressions in
+the items managed by the list box.  They are used in filter and isearch modes
+narrow and select the displayed items.  The same text matchers are also used
+by the highlihting algorithm to highlight the strings that match the text
+expressions in the displayed items.
+
+When a text matcher finds a match in a string, it assigns a score to the
+match.  This score is used by the filtering algorithm to sort the items so
+that the itmes with higher scores are listed first.
+
+The available matchers are "simple", "regexp", "words" and "sparse":
+
+  "simple" - Simple matcher				*puls-matcher-simple*
+
+  The simple matcher searches for the text expression literally but in a case
+  insensitive manner (ASCII characters only).
+
+
+  "regexp" - Vim regular expression matcher		*puls-matcher-regexp*
+
+  The text expression is a Vim regular expression. The matcher observes the
+  Vim settings 'magic' and 'ignorecase' but ignores 'smartcase'.
+
+
+  "words" - Word matcher				*puls-matcher-words*
+
+  The text expression of a word matcher is a list of words separated by
+  whitespace.  An item matches a list of words if all the words are found in
+  the item.  The words are searched in a case insensitive manner (ASCII
+  characters only). Multiple lists of words can be searched simultaneously if
+  they are separated with the '|' character in the expression.
+  Example: >
+    Expression: word mat | not
+    Item:	This is a word matcher		" match: word mat
+    Item:	This is not a test		" match: not
+    Item:	Match this word			" match: Mat word
+    Item:	Match this			" no match
+  <
+
+  "sparse" - Sparse matcher				*puls-matcher-sparse*
+
+  An item matches a text expression of a sparse matcher if the item contains
+  all the characters specified in the expression in the order defined by the
+  expression but with an arbitrary number of other characters between them.
+  The score of a match depends on the proximity of the consecutive characters
+  and on the relations between the classes of the matching characters and
+  their preceding characters in the match.  The algorithm tries to find the
+  match with the highest score.
+  Example: >
+    Expression: tiw
+    Item 1:	This is a word matcher		" match, score 300
+    Item 2:	This is not a test		" no match
+    Item 3:	Match this word			" match, score 210
+  <
+  In Item 1 there are two matches: "(T)h(i)s (w)ord" and "(T)his (i)s (w)ord".
+  The second match has a higher score because all characters are found at the
+  beginning of a word (preceding character is a whitespace).
+  Item 3 has also two matches: "Ma(t)ch th(i)s (w)ord" and "(t)h(i)s (w)ord".
+  The second has a higher score because more characters are at the beginning
+  of a word.
+
+  TODO: add an option to set the list of special characters and their scores.
+
+  TODO: add an option to set the last-retry position; if a character is found
+  after this position in a string, the algorithm will not try to improve it.
+  Currently the position is set to -1 which makes the algorithm find the match
+  with the highest score.
+
+
+A text matcher can be selected in isearch and filter mode with <c-f> (see
+|puls-kmap-filter|, |puls-kmap-isearch|). To set the initial matcher for the
+particular mode use the option fields "filter_matcher", "isearch_matcher" and
+"highlight_matcher" with the name of the matcher. See |puls-common-options|.
+
+
+*puls-loop* 
+    ## What does the main loop do (drawing, event handling)? What is the
+    ## precedence of events in the main loop?
+
+
+Popup list commands					*puls-commads*
+
+A command is a string that is associated with an operation that the popup list
+can perform. Unlike Vim commands, popup list commands don't accept parameters
+except some special purpose commands.
+
+The following commands are built into the popuplist:
+
+  next-item		select the next/previous item
+  prev-item
+
+  next-page		select the item that is one page down/up
+  prev-page
+
+  go-home		select the first/last item
+  go-end
+
+  shift-left		shift the text of all the items to the left/right
+  shift-right
+
+  toggle-marked		toggle the "marked" state of the current item
+
+  auto-resize		resize the popup list to fit the contents
+
+  input-bs		delete the last character in the input field
+
+  input-clear		clear the input field
+
+  isearch-next		find the next/previous item that matches the search
+  isearch-prev		condition
+
+  isearch-next-matcher	select the next matching algorithm for
+  filter-next-matcher	searching/filtering
+
+  filter-toggle-titles	toggle the way the titles are displayed
+
+  select-parent		select the parent level in a hierarchical item
+			provider (eg. the parent menu)
+
+The commands for switching the popup list mode are:
+
+  modeswitch:normal	Switch to the mode that follows the colon
+  modeswitch:filter
+  modeswitch:isearch
+  modeswitch:shortcut
+
+The main popup list loop can be terminated by the following commands:
+
+  quit			Abort list processing.
+
+  accept		Accept the current item. The command has no effect if
+			the current item is disabled or a separator.
+
+  accept:{string}	A user defined accept command. Same as "accept", but
+			allows the programmer to accept an item in different
+			ways.
+
+  done:{string}		Similar to "accept:{string}" except the that the state
+			returned by the popuplist() command includes only the
+			current mode and the current item index, but no other
+			state information. This command is intended for cases
+			where a programmer wants to modify the contents of the
+			list and redisplay it.
+
+Other commands are defined by the item providers (see |puls-providers|).
+
+
+User defined commands					*puls-user-commands*
+
+A user can define additional commands that are available while the popup list
+is active.  The commands are defined in the field "commands" of the third
+parameter of the |popuplist()| function.  The field is a dictionary where the
+key of each entry is a command name and the value is the name of a Vim
+function to call. >
+
+    let cmds = { "cmd_a": "g:MyPuls_cb",
+	       \ "cmd_b": "g:MyPuls_cb",
+	       \ "cmd_c": "g:OtherPuls_cb" }
+    let rv = popuplist(items, "test", { "commands": cmds })
+<
+In this example we defined 3 popup list commands where the commands "cmd_a"
+and "cmd_b" use the same callback function.
+
+When a user defined command is executed, the Vim function associated with the
+command is called.  The function receives two parameters: the command name and
+the current popup list state: >
+
+    function callback(command, state)
+<
+The state is a dictionary with the following fields:
+
+  "current"		Index of the current item
+
+  "marked"		List of indices of marked items
+
+  "items"		The list that is being displayed
+			Note: this field is available only when the VimList
+			item provider is used -- when the first parameter of
+			the popuplist() function is a list.  See
+			|puls-vimlist|.
+
+[The field "items" should be considered read-only. ?] Currently the popup list
+code locks the list, but not its items. For safety the items in the list are
+checked if they are still valid when the function returns. If the code detects
+a change in the list, the internal list is rebuilt, which may take some time.
+
+The callback function doesn't have to return any value. If it does, it should
+be a dictionary in which case the popup list code will analyze it and
+recognize the following fields if present:
+
+  "redraw"		An integer. When non-zero, the popup list will be
+			redrawn.
+
+  "nextcmd"		A string. A list of commands separated by "|" that are
+			added to the command queue.
+
+  "additems"		A list. Items that should be appended to the current
+			list. See also |puls-vimlist|, |puls-incremental|.
+			Note: only used by the VimList item provider.
+
+  "title"		Set the title of the list box.
+
+
+Popup list keymaps					*puls-keymaps*
+
+A keymap maps a sequence of keys to a sequence of popup list commands
+separated by "|" and is associated with a popup list mode (|puls-modes|).  The
+default keymaps are defined when the |popuplist()| function is called.  They
+can be modified by the user with the "keymap" field of the third parameter of
+the function.  The field is a dictionary of dictionaries: a keymap can be
+defined for every supported popup list mode.
+
+In the following example the commands to move to the next/previous item are
+mapped on keys <F5> and <F6> in normal and filter modes: >
+
+  let kmap = {}
+  let kmap["normal"] = { "<F5>": "item-prev", "<F6>": "item.next" }
+  let kmap.filter    = { "<F5>": "item-prev", "<F6>": "item.next" }
+  let rv = popuplist(items, "title", { "keymap": kmap })
+<
+Note: we use different but equivalent notations to define the keymaps.
+
+The popup list uses the getchar() function to retrieve the keys from the
+terminal so it can (in theory) recognize any key sequence that Vim can
+recognize. It is ok if an ambiguous key sequence is defined in the keymap. In
+this case the popup list will wait until it receives a character that will
+resolve the ambiguity. Invalid sequences are silently dropped.
+
+      Note: there is a difference between Vim and popup list in handling
+      invalid sequences.  When the sequences "a" and "ab" are mapped, and the
+      current input sequence is "a", they both wait for the next character.
+      Then if "b" is received, the command for "ab" will be executed.  If any
+      other character (eg.  "c") is received, they both execute the command
+      for "a".  The difference is that Vim starts the next sequence with "c"
+      while the popup list main loop drops it.  This is a BUG in popup list
+      and will be fixed.
+
+      Note: the popup list waits for a sequence to be completed according to
+      the settings 'timeoutlen' and 'ttimeoutlen'.  Problems arise when a key
+      sequence is ambiguous in Vim.  In this case getchar() will wait for the
+      sequence to be completed.  When the timeout happens in getchar() the
+      sequence may still be incomplete for the popup list and it will wait for
+      another timeout.  This is a BUG in popup list and will hopefully be
+      fixed (eg. by measuring the time spent in getchar() and reducing the
+      timeout for the popup list).
+
+    ## What is a keymap? What keys can be defined in a keymap? How are keys
+    ## processed? What commands can be bound to keys? How are ambiguous key
+    ## sequences handled?
+
+
+Default popup list keymaps				*puls-default-keymaps*
+
+Normal mode						*puls-kmap-normal*
+  key			command~
+  "q"			"quit"
+  "j"			"next-item"
+  "k"			"prev-item"
+  "n"			"next-page"
+  "p"			"prev-page"
+  "gg"			"go-home"
+  "G"			"go-end"
+  "h"			"shift-left"
+  "l"			"shift-right"
+  "m"			"toggle-marked|next-item"
+  "f"			"modeswitch:filter"
+  "%"			"modeswitch:filter"
+  "/"			"modeswitch:isearch"
+  "&"			"modeswitch:shortcut"
+  "<c-n>"		"isearch-next"
+  "<c-p>"		"isearch-prev"
+  "<c-l>"		"auto-resize"
+  "<c-t>"		"filter-toggle-titles"
+  "<tab>"		"next-item"
+  "<s-tab>"		"prev-item"
+  "<down>"		"next-item"
+  "<up>"		"prev-item"
+  "<pagedown>"		"next-page"
+  "<pageup>"		"prev-page"
+  "<home>"		"go-home"
+  "<end>"		"go-end"
+  "<left>"		"shift-left"
+  "<right>"		"shift-right"
+  "<cr>"		"accept"
+  "<backspace>"		"select-parent"
+  "<esc>"		"quit"
+
+Filter mode						*puls-kmap-filter*
+  key			command~
+  "<cr>"		"accept"
+  "<tab>"		"modeswitch:normal|next-item"
+  "<s-tab>"		"modeswitch:normal|prev-item"
+  "<esc>"		"modeswitch:normal"
+  "<backspace>"		"input-bs"
+  "<c-u>"		"input-clear"
+  "<c-f>"		"filter-next-matcher"
+  "<c-t>"		"filter-toggle-titles"
+
+ISearch mode						*puls-kmap-isearch*
+  key			command~
+  "<cr>"		"accept"
+  "<tab>"		"modeswitch:normal|next-item"
+  "<s-tab>"		"modeswitch:normal|prev-item"
+  "<esc>"		"modeswitch:normal"
+  "<backspace>"		"input-bs"
+  "<c-u>"		"input-clear"
+  "<c-n>"		"isearch-next"
+  "<c-p>"		"isearch-prev"
+  "<c-f>"		"isearch-next-matcher"
+
+Shortcut mode						*puls-kmap-shortcut*
+  key			command~
+  "%"			"modeswitch:filter"
+  "/"			"modeswitch:isearch"
+  "&"			"modeswitch:normal"
+  "<tab>"		"next-item"
+  "<s-tab>"		"prev-item"
+  "<down>"		"next-item"
+  "<up>"		"prev-item"
+  "<pagedown>"		"next-page"
+  "<pageup>"		"prev-page"
+  "<left>"		"shift-left"
+  "<right>"		"shift-right"
+  "<cr>"		"accept"
+  "<backspace>"		"select-parent"
+  "<esc>"		"quit"
+
+
+*puls-position*
+    How to define a position of the list box? How to update the size
+    (position) while the list box is displayed?
+
+*puls-status*
+    What are the meanings of every returned status value? How can additional
+    statuses be defined and used?
+
+
+Item providers						*puls-providers*
+
+The first parameter of the |popuplist()| function defines the item provider
+which will prapare the items to be displayed in the listbox. If the parameter
+is a list, the Vim-list (|puls-vimlist|) provider will be used. It the
+parameter is a string, it holds the name of the internal provider to use.
+
+The following internal providers are available:
+
+    "buffers"		Displays the list of buffers.
+			See |puls-buffers|.
+
+    "menu"		Displays the Vim menu.
+			See |puls-menus|.
+
+    "quickfix"		Displays the error list or a location list.
+			See |puls-quickfix|.
+
+    ## What are item providers? What providers are available? Links to providers.
+
+*puls-vimlist* *puls-incremental*
+    What kind of list items are supported? How to create the initial list? How
+    can a callback command change the list?  How to fill the list
+    incrementally? How to prepare the items for display? [How to skip leading
+    characters?] [How to define the filtering range in an item?] How to define
+    title items in the list?
+
+
+Buffer-list item provider				*puls-buffers*
+
+When the first parameter is "buffers" a list of buffers will be displayed. The
+buffers can be selected, sorted, deleted and wiped-out from the popup list.
+
+Additional keymap:
+
+    "u"			Toggle the display of unlisted buffers.
+    "xd"		Delete buffer.
+    "xu"		Unload buffer.
+    "xw"		Wipeout buffer.
+    "ob"		Sort by buffer number.
+    "on"		Sort by filename.
+
+    ** The commands are only partially implemented. A better implementation
+    is the VxBufListSelect command from vimuiex (Vim script 2606).
+
+    ## How are the buffers displayed? How to change the display order of the
+    ## buffers? What commands are available? How to display the buffers in the
+    ## MRU order? How to show/hide unlisted buffers?
+
+
+Menu item provider					*puls-menus*
+
+When the first parameter is "menu" or "Xmenu" where X is one of n, i, v, s, c,
+o, the menu with the path defined in the second parameter will be displayed.
+If the second parameter is not provided or is empty, the root menu will be
+displayed.  The flag X defines the Vim mode for which the menu should be
+displayed.  If "menu" is used, "nmenu" is assumed.  The items that are not
+available in the selected Vim mode are disabled. Examples: >
+
+    let rv = popuplist("menu")
+    let rv = popuplist("menu", "Tools.Spelling")
+<
+
+When "vmenu" is used, the last used visual selection is restored before the
+command selected from the menu is executed.
+
+The following mappings display the menu with only the items for the current
+Vim mode enabled: >
+
+    nmap  <F9> :call popuplist("nmenu", "", {"mode":"shortcut"})<cr>
+    imap  <F9> <c-o>:call popuplist("imenu", "", {"mode":"shortcut"})<cr>
+    vmap  <F9> :<c-u>call popuplist("vmenu", "", {"mode":"shortcut"})<cr>
+<
+When Vim insert mode is active, the listbox displays the menus that are active
+in insert mode (imenu) and puts the listbox in "shortcut" mode (see
+|puls-modes|).
+
+The commands executed through the menu provider can be recorded and later
+executed as a part of a macro. They can not be repeated with the dot command.
+
+    ## How to display the whole Vim menu? How to display the selected menu? What
+    ## menu modes are supported? How is the visual selection handled? What
+    ## commands can be defined for proper use of menus? Can a menu command be
+    ## repeated with <.> ? Can a menu command be recorded and replayed?
+
+
+QuickFix item providers					*puls-quickfix*
+
+The quickfix provider provides items from an error or a location list. The
+first parameter of the |popuplist()| function defines the type of the list:
+
+  "copen"		Display the error list. Raise an error if there is no
+			error list.
+			See also |:copen|.
+
+  "quickfix"		Display the error list even if it's empty.
+
+  "lopen"		Display the location list of the current window or the
+			list of the associated window if the current window is
+			a quickfix window. Raises an error if there is no
+			location list for the current window.
+			See also |:lopen|.
+
+The display of the item is different than in a quickfix window. For every file
+the filename is displayed on a separate line and the items from that file
+follow.
+
+    ## How is the quickfix list displayed? What commands are available?
+
+*puls-decoration*
+    [How to customize the list box border?] What are the parts of the border?
+
+
+The colors used in the popup list			*puls-colors*
+
+    "PulsNormal"
+    "PulsSelected"
+    "PulsTitleItem"
+    "PulsTitleItemSel"
+    "PulsMarked"
+    "PulsMarkedSel"
+    "PulsDisabled"
+    "PulsDisabledSel"
+    "PulsBorder"
+    "PulsScrollBar"
+    "PulsScrollThumb"
+    "PulsScrollBarSpace"
+    "PulsInput"
+    "PulsInputActive"
+    "PulsShortcut"
+    "PulsShortcutSel"
+    "PulsHlFilter"
+    "PulsHlSearch"
+    "PulsHlUser"
+
+Example: >
+    " This should be executed before :colorscheme
+    if 1 && has('popuplist')
+       "au ColorScheme * runtime colors/puls_magenta.vim
+       au ColorScheme * runtime colors/puls_grey.vim
+    endif
+<
+
+    ## What are names of highlight items used by the popuplist? How to apply the
+    ## color scheme for the popuplist? [How to define a separate color scheme for
+    ## every listbox when multiple boxes are displayed?]
+
+vim: set sw=2 ts=8 sts=2 noet tw=78 fo=2tcroql :vim

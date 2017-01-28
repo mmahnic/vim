@@ -76,6 +76,13 @@ SRC_ALL =	\
 		src/ops.c \
 		src/option.c \
 		src/option.h \
+		src/popuplst.c \
+		src/puls_pb.c \
+		src/puls_pm.c \
+		src/puls_pq.c \
+		src/puls_st.c \
+		src/puls_test.c \
+		src/puls_tw.c \
 		src/popupmnu.c \
 		src/quickfix.c \
 		src/regexp.c \
@@ -106,6 +113,7 @@ SRC_ALL =	\
 		src/window.c \
 		src/tee/tee.c \
 		src/xxd/xxd.c \
+		src/mmoocc.py \
 		src/testdir/gen_opt_test.vim \
 		src/testdir/README.txt \
 		src/testdir/Make_all.mak \

@@ -299,6 +299,9 @@ static void f_pathshorten(typval_T *argvars, typval_T *rettv);
 #ifdef FEAT_PERL
 static void f_perleval(typval_T *argvars, typval_T *rettv);
 #endif
+#ifdef FEAT_POPUPLIST
+static void f_popuplist (typval_T *argvars, typval_T *rettv);
+#endif
 #ifdef FEAT_FLOAT
 static void f_pow(typval_T *argvars, typval_T *rettv);
 #endif
@@ -790,6 +793,9 @@ static struct fst
     {"pathshorten",	1, 1, f_pathshorten},
 #ifdef FEAT_PERL
     {"perleval",	1, 1, f_perleval},
+#endif
+#ifdef FEAT_POPUPLIST
+    {"popuplist",	1, 3, f_popuplist},
 #endif
 #ifdef FEAT_FLOAT
     {"pow",		2, 2, f_pow},
@@ -6502,6 +6508,9 @@ f_has(typval_T *argvars, typval_T *rettv)
 #ifdef FEAT_PERSISTENT_UNDO
 	"persistent_undo",
 #endif
+#ifdef FEAT_POPUPLIST
+	"popuplist",
+#endif
 #if defined(FEAT_PYTHON)
 	"python_compiled",
 # if defined(DYNAMIC_PYTHON)
@@ -8885,6 +8894,18 @@ f_perleval(typval_T *argvars, typval_T *rettv)
 
     str = tv_get_string_buf(&argvars[0], buf);
     do_perleval(str, rettv);
+}
+#endif
+
+#ifdef FEAT_POPUPLIST
+/*
+ * "popuplist()" function
+ */
+    static void
+f_popuplist(typval_T* argvars, typval_T* rettv)
+{
+    int puls_test(typval_T* argvars, typval_T* rettv);
+    puls_test(argvars, rettv);
 }
 #endif
 

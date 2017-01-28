@@ -1,0 +1,4667 @@
+/* vim: set ft=c sw=4 ts=8 et fileencoding=utf-8 :vim */
+/* NOTE: This file is auto-generated. DO NOT EDIT. The changes will be lost. */
+
+#include "popupls_.h"
+
+/* ########## class Object ########## */
+static void _OOC_OBJECT_init (/*Object_T*/void* _self);
+static void _OOC_OBJECT_destroy (/*Object_T*/void* _self);
+
+static _Object_VT _vt_Object = {
+    &_OOC_OBJECT_destroy,
+};
+#define init_Object(pvar) \
+    _OOC_OBJECT_init(pvar)
+
+/* ########## class ItemComparator(Object) ########## */
+static void _icmprtr_init (/*ItemComparator_T*/void* _self);
+static int _icmprtr_compare (/*ItemComparator_T*/void* _self, void* a, void* b);
+
+static _ItemComparator_VT _vt_ItemComparator = {
+    &_OOC_OBJECT_destroy,
+    &_icmprtr_compare,
+};
+#define init_ItemComparator(pvar) \
+    _icmprtr_init(pvar)
+
+/* ########## class ItemMatcher(Object) ########## */
+static void _imtchr_init (/*ItemMatcher_T*/void* _self);
+static int _imtchr_match (/*ItemMatcher_T*/void* _self, void* item);
+
+static _ItemMatcher_VT _vt_ItemMatcher = {
+    &_OOC_OBJECT_destroy,
+    &_imtchr_match,
+};
+#define init_ItemMatcher(pvar) \
+    _imtchr_init(pvar)
+
+/* ########## class ListHelper(Object) ########## */
+static void _lsthlpr_init (/*ListHelper_T*/void* _self);
+static void _lsthlpr_add_head (/*ListHelper_T*/void* _self, void* item);
+static void _lsthlpr_add_tail (/*ListHelper_T*/void* _self, void* item);
+static void* _lsthlpr_remove (/*ListHelper_T*/void* _self, void* item);
+static void* _lsthlpr_remove_head (/*ListHelper_T*/void* _self);
+static int _lsthlpr__rem_del_all (/*ListHelper_T*/void* _self, struct _ItemMatcher_o* cond, int dodel);
+static int _lsthlpr_remove_all (/*ListHelper_T*/void* _self, struct _ItemMatcher_o* cond);
+static int _lsthlpr_delete_all (/*ListHelper_T*/void* _self, struct _ItemMatcher_o* cond);
+
+static _ListHelper_VT _vt_ListHelper = {
+    &_OOC_OBJECT_destroy,
+    &_lsthlpr_add_head,
+    &_lsthlpr_add_tail,
+    &_lsthlpr_remove,
+    &_lsthlpr_remove_head,
+    &_lsthlpr__rem_del_all,
+    &_lsthlpr_remove_all,
+    &_lsthlpr_delete_all,
+};
+#define init_ListHelper(pvar) \
+    _lsthlpr_init(pvar)
+
+/* ########## class DictIterator(Object) ########## */
+static void _dicti_init (/*DictIterator_T*/void* _self);
+static void _dicti_destroy (/*DictIterator_T*/void* _self);
+static dictitem_T* _dicti_begin (/*DictIterator_T*/void* _self, dict_T* dict);
+static dictitem_T* _dicti_next (/*DictIterator_T*/void* _self);
+
+static _DictIterator_VT _vt_DictIterator = {
+    &_dicti_destroy,
+    &_dicti_begin,
+    &_dicti_next,
+};
+#define init_DictIterator(pvar) \
+    _dicti_init(pvar)
+
+/* ########## class SegmentedGrowArray(Object) ########## */
+static void _sgarr_init (/*SegmentedGrowArray_T*/void* _self);
+static void _sgarr_destroy (/*SegmentedGrowArray_T*/void* _self);
+static void _sgarr_clear (/*SegmentedGrowArray_T*/void* _self);
+static void _sgarr_clear_contents (/*SegmentedGrowArray_T*/void* _self);
+static void _sgarr_truncate (/*SegmentedGrowArray_T*/void* _self);
+static int _sgarr_grow (/*SegmentedGrowArray_T*/void* _self, int count);
+static void* _sgarr_get_new_item (/*SegmentedGrowArray_T*/void* _self);
+static void* _sgarr_get_item (/*SegmentedGrowArray_T*/void* _self, int index);
+static void _sgarr_sort (/*SegmentedGrowArray_T*/void* _self, struct _ItemComparator_o* cmp);
+static void _sgarr__qsort (/*SegmentedGrowArray_T*/void* _self, int low, int high, struct _ItemComparator_o* cmp);
+
+static _SegmentedGrowArray_VT _vt_SegmentedGrowArray = {
+    &_sgarr_destroy,
+    &_sgarr_clear,
+    &_sgarr_clear_contents,
+    &_sgarr_truncate,
+    &_sgarr_grow,
+    &_sgarr_get_new_item,
+    &_sgarr_get_item,
+    &_sgarr_sort,
+    &_sgarr__qsort,
+};
+#define init_SegmentedGrowArray(pvar) \
+    _sgarr_init(pvar)
+
+/* ########## class SegmentedArrayIterator(Object) ########## */
+static void _itsgarr_init (/*SegmentedArrayIterator_T*/void* _self);
+static void* _itsgarr_begin (/*SegmentedArrayIterator_T*/void* _self, struct _SegmentedGrowArray_o* container);
+static void* _itsgarr_next (/*SegmentedArrayIterator_T*/void* _self);
+
+static _SegmentedArrayIterator_VT _vt_SegmentedArrayIterator = {
+    &_OOC_OBJECT_destroy,
+    &_itsgarr_begin,
+    &_itsgarr_next,
+};
+#define init_SegmentedArrayIterator(pvar) \
+    _itsgarr_init(pvar)
+
+static void _ntfcb_init (/*NotificationCallback_T*/void* _self);
+static int _ntfcb_call (/*NotificationCallback_T*/void* _self, void* data);
+#define init_NotificationCallback(pvar) \
+    _ntfcb_init(pvar)
+
+/* ########## class NotificationList(Object) ########## */
+static void _ntlst_init (/*NotificationList_T*/void* _self);
+static void _ntlst_destroy (/*NotificationList_T*/void* _self);
+static void _ntlst_notify (/*NotificationList_T*/void* _self, void* _data);
+static void _ntlst_add (/*NotificationList_T*/void* _self, void* instance, MethodCallback_Fn callback);
+static void _ntlst_remove_obj (/*NotificationList_T*/void* _self, void* instance);
+static void _ntlst_remove_cb (/*NotificationList_T*/void* _self, MethodCallback_Fn callback);
+
+static _NotificationList_VT _vt_NotificationList = {
+    &_ntlst_destroy,
+    &_ntlst_notify,
+    &_ntlst_add,
+    &_ntlst_remove_obj,
+    &_ntlst_remove_cb,
+};
+#define init_NotificationList(pvar) \
+    _ntlst_init(pvar)
+
+/* ########## class CommandQueueItem(Object) ########## */
+static void _cmdqit_init (/*CommandQueueItem_T*/void* _self);
+static void _cmdqit_destroy (/*CommandQueueItem_T*/void* _self);
+
+static _CommandQueueItem_VT _vt_CommandQueueItem = {
+    &_cmdqit_destroy,
+};
+#define init_CommandQueueItem(pvar) \
+    _cmdqit_init(pvar)
+
+/* ########## class CommandQueue(Object) ########## */
+static void _cmdque_init (/*CommandQueue_T*/void* _self);
+static void _cmdque_destroy (/*CommandQueue_T*/void* _self);
+static void _cmdque_add (/*CommandQueue_T*/void* _self, char_u* command);
+static void _cmdque_pop (/*CommandQueue_T*/void* _self);
+static char_u* _cmdque_head (/*CommandQueue_T*/void* _self);
+
+static _CommandQueue_VT _vt_CommandQueue = {
+    &_cmdque_destroy,
+    &_cmdque_add,
+    &_cmdque_pop,
+    &_cmdque_head,
+};
+#define init_CommandQueue(pvar) \
+    _cmdque_init(pvar)
+
+static void _ppit_init (/*PopupItem_T*/void* _self);
+static void _ppit_destroy (/*PopupItem_T*/void* _self);
+#define init_PopupItem(pvar) \
+    _ppit_init(pvar)
+
+/* ########## class ItemProvider ########## */
+static void _iprov_init (/*ItemProvider_T*/void* _self);
+static void _iprov_destroy (/*ItemProvider_T*/void* _self);
+static void _iprov_read_options (/*ItemProvider_T*/void* _self, dict_T* options);
+static void _iprov_on_start (/*ItemProvider_T*/void* _self);
+static void _iprov_clear_items (/*ItemProvider_T*/void* _self);
+static void _iprov_sync_items (/*ItemProvider_T*/void* _self);
+static int _iprov_get_item_count (/*ItemProvider_T*/void* _self);
+static PopupItem_T* _iprov_get_item (/*ItemProvider_T*/void* _self, int item);
+static PopupItem_T* _iprov_append_pchar_item (/*ItemProvider_T*/void* _self, char_u* text, int shared);
+static char_u* _iprov_get_display_text (/*ItemProvider_T*/void* _self, int item);
+static char_u* _iprov_get_filter_text (/*ItemProvider_T*/void* _self, int item);
+static char_u* _iprov_get_path_text (/*ItemProvider_T*/void* _self);
+static char_u* _iprov_get_title (/*ItemProvider_T*/void* _self);
+static void _iprov_set_title (/*ItemProvider_T*/void* _self, char_u* title);
+static void _iprov_set_marked (/*ItemProvider_T*/void* _self, int item, int marked);
+static uint _iprov_has_flag (/*ItemProvider_T*/void* _self, int item, uint flag);
+static int _iprov_select_item (/*ItemProvider_T*/void* _self, int item);
+static int _iprov_select_parent (/*ItemProvider_T*/void* _self);
+static int _iprov_find_shortcut (/*ItemProvider_T*/void* _self, char_u* qchar_mb, int startidx, int* index, int* unique);
+static int _iprov_sort_items (/*ItemProvider_T*/void* _self, struct _ItemComparator_o* cmp);
+static void _iprov_update_result (/*ItemProvider_T*/void* _self, dict_T* status);
+static char_u* _iprov_handle_command (/*ItemProvider_T*/void* _self, struct _PopupList_o* puls, char_u* command);
+static int _iprov_vim_cb_command (/*ItemProvider_T*/void* _self, struct _PopupList_o* puls, char_u* command, typval_T* rettv);
+static void _iprov__process_vim_cb_result (/*ItemProvider_T*/void* _self, struct _PopupList_o* puls, dict_T* options);
+static void _iprov_default_keymap (/*ItemProvider_T*/void* _self, struct _PopupList_o* puls);
+
+static _ItemProvider_VT _vt_ItemProvider = {
+    &_iprov_destroy,
+    &_iprov_read_options,
+    &_iprov_on_start,
+    &_iprov_clear_items,
+    &_iprov_sync_items,
+    &_iprov_get_item_count,
+    &_iprov_get_item,
+    &_iprov_append_pchar_item,
+    &_iprov_get_display_text,
+    &_iprov_get_filter_text,
+    &_iprov_get_path_text,
+    &_iprov_get_title,
+    &_iprov_set_title,
+    &_iprov_set_marked,
+    &_iprov_has_flag,
+    &_iprov_select_item,
+    &_iprov_select_parent,
+    &_iprov_find_shortcut,
+    &_iprov_sort_items,
+    &_iprov_update_result,
+    &_iprov_handle_command,
+    &_iprov_vim_cb_command,
+    &_iprov__process_vim_cb_result,
+    &_iprov_default_keymap,
+};
+#define init_ItemProvider(pvar) \
+    _iprov_init(pvar)
+
+/* ########## class VimlistItemProvider(ItemProvider) ########## */
+static void _vlprov_init (/*VimlistItemProvider_T*/void* _self);
+static void _vlprov_destroy (/*VimlistItemProvider_T*/void* _self);
+static struct _PopupItem_o* _vlprov__cache_list_item (/*VimlistItemProvider_T*/void* _self, listitem_T* item);
+static void _vlprov_sync_items (/*VimlistItemProvider_T*/void* _self);
+static void _vlprov_set_list (/*VimlistItemProvider_T*/void* _self, list_T* vimlist);
+static void _vlprov_read_options (/*VimlistItemProvider_T*/void* _self, dict_T* options);
+static void _vlprov_update_titles (/*VimlistItemProvider_T*/void* _self);
+static char_u* _vlprov_get_display_text (/*VimlistItemProvider_T*/void* _self, int item);
+static void _vlprov_update_result (/*VimlistItemProvider_T*/void* _self, dict_T* status);
+static char_u* _vlprov_handle_command (/*VimlistItemProvider_T*/void* _self, struct _PopupList_o* puls, char_u* command);
+
+static _VimlistItemProvider_VT _vt_VimlistItemProvider = {
+    &_vlprov_destroy,
+    &_vlprov_read_options,
+    &_iprov_on_start,
+    &_iprov_clear_items,
+    &_vlprov_sync_items,
+    &_iprov_get_item_count,
+    &_iprov_get_item,
+    &_iprov_append_pchar_item,
+    &_vlprov_get_display_text,
+    &_iprov_get_filter_text,
+    &_iprov_get_path_text,
+    &_iprov_get_title,
+    &_iprov_set_title,
+    &_iprov_set_marked,
+    &_iprov_has_flag,
+    &_iprov_select_item,
+    &_iprov_select_parent,
+    &_iprov_find_shortcut,
+    &_iprov_sort_items,
+    &_vlprov_update_result,
+    &_vlprov_handle_command,
+    &_iprov_vim_cb_command,
+    &_iprov__process_vim_cb_result,
+    &_iprov_default_keymap,
+    &_vlprov__cache_list_item,
+    &_vlprov_set_list,
+    &_vlprov_update_titles,
+};
+#define init_VimlistItemProvider(pvar) \
+    _vlprov_init(pvar)
+
+static void _box_init (/*Box_T*/void* _self);
+static int _box_right (/*Box_T*/void* _self);
+static int _box_bottom (/*Box_T*/void* _self);
+static void _box_move (/*Box_T*/void* _self, int x, int y);
+#define init_Box(pvar) \
+    _box_init(pvar)
+
+/* ########## class LineEdit ########## */
+static void _lned_init (/*LineEdit_T*/void* _self);
+static void _lned_destroy (/*LineEdit_T*/void* _self);
+static void _lned_set_text (/*LineEdit_T*/void* _self, char_u* ptext);
+static int _lned_add_text (/*LineEdit_T*/void* _self, char_u* ptext);
+static int _lned_backspace (/*LineEdit_T*/void* _self);
+
+static _LineEdit_VT _vt_LineEdit = {
+    &_lned_destroy,
+    &_lned_set_text,
+    &_lned_add_text,
+    &_lned_backspace,
+};
+#define init_LineEdit(pvar) \
+    _lned_init(pvar)
+
+/* ########## class TextMatcher(Object) ########## */
+static void _txm_init (/*TextMatcher_T*/void* _self);
+static void _txm_destroy (/*TextMatcher_T*/void* _self);
+static void _txm_set_search_str (/*TextMatcher_T*/void* _self, char_u* needle);
+static ulong _txm_match (/*TextMatcher_T*/void* _self, char_u* haystack);
+static void _txm_init_highlight (/*TextMatcher_T*/void* _self, char_u* haystack);
+static int _txm_get_match_at (/*TextMatcher_T*/void* _self, char_u* haystack);
+
+static _TextMatcher_VT _vt_TextMatcher = {
+    &_txm_destroy,
+    &_txm_set_search_str,
+    &_txm_match,
+    &_txm_init_highlight,
+    &_txm_get_match_at,
+};
+#define init_TextMatcher(pvar) \
+    _txm_init(pvar)
+
+/* ########## class TextMatcherRegexp(TextMatcher) ########## */
+static void _txmrgxp_init (/*TextMatcherRegexp_T*/void* _self);
+static void _txmrgxp_destroy (/*TextMatcherRegexp_T*/void* _self);
+static void _txmrgxp_set_search_str (/*TextMatcherRegexp_T*/void* _self, char_u* needle);
+static ulong _txmrgxp_match (/*TextMatcherRegexp_T*/void* _self, char_u* haystack);
+static void _txmrgxp_init_highlight (/*TextMatcherRegexp_T*/void* _self, char_u* haystack);
+static int _txmrgxp_get_match_at (/*TextMatcherRegexp_T*/void* _self, char_u* haystack);
+
+static _TextMatcherRegexp_VT _vt_TextMatcherRegexp = {
+    &_txmrgxp_destroy,
+    &_txmrgxp_set_search_str,
+    &_txmrgxp_match,
+    &_txmrgxp_init_highlight,
+    &_txmrgxp_get_match_at,
+};
+#define init_TextMatcherRegexp(pvar) \
+    _txmrgxp_init(pvar)
+
+static void _tmwmxpr_init (/*TmWordMatchExpr_T*/void* _self);
+static void _tmwmxpr_destroy (/*TmWordMatchExpr_T*/void* _self);
+static void _tmwmxpr_add_word_start (/*TmWordMatchExpr_T*/void* _self, char_u* _word, int yesno);
+#define init_TmWordMatchExpr(pvar) \
+    _tmwmxpr_init(pvar)
+
+/* ########## class TextMatcherWords(TextMatcher) ########## */
+static void _txmwrds_init (/*TextMatcherWords_T*/void* _self);
+static void _txmwrds_destroy (/*TextMatcherWords_T*/void* _self);
+static void _txmwrds_clear_words (/*TextMatcherWords_T*/void* _self);
+static void _txmwrds_set_search_str (/*TextMatcherWords_T*/void* _self, char_u* needle);
+static ulong _txmwrds_match (/*TextMatcherWords_T*/void* _self, char_u* haystack);
+static void _txmwrds_init_highlight (/*TextMatcherWords_T*/void* _self, char_u* haystack);
+static int _txmwrds_get_match_at (/*TextMatcherWords_T*/void* _self, char_u* haystack);
+
+static _TextMatcherWords_VT _vt_TextMatcherWords = {
+    &_txmwrds_destroy,
+    &_txmwrds_set_search_str,
+    &_txmwrds_match,
+    &_txmwrds_init_highlight,
+    &_txmwrds_get_match_at,
+    &_txmwrds_clear_words,
+};
+#define init_TextMatcherWords(pvar) \
+    _txmwrds_init(pvar)
+
+/* ########## class TextMatcherCmdT(TextMatcher) ########## */
+static void _txmcmdt_init (/*TextMatcherCmdT_T*/void* _self);
+static void _txmcmdt_destroy (/*TextMatcherCmdT_T*/void* _self);
+static void _txmcmdt__clear (/*TextMatcherCmdT_T*/void* _self);
+static void _txmcmdt_set_search_str (/*TextMatcherCmdT_T*/void* _self, char_u* needle);
+static ulong _txmcmdt_match (/*TextMatcherCmdT_T*/void* _self, char_u* haystack);
+static ulong _txmcmdt__calc_pos_score (/*TextMatcherCmdT_T*/void* _self, char_u* haystack, char_u** positions, int npos);
+static void _txmcmdt_init_highlight (/*TextMatcherCmdT_T*/void* _self, char_u* haystack);
+static int _txmcmdt_get_match_at (/*TextMatcherCmdT_T*/void* _self, char_u* haystack);
+
+static _TextMatcherCmdT_VT _vt_TextMatcherCmdT = {
+    &_txmcmdt_destroy,
+    &_txmcmdt_set_search_str,
+    &_txmcmdt_match,
+    &_txmcmdt_init_highlight,
+    &_txmcmdt_get_match_at,
+    &_txmcmdt__clear,
+    &_txmcmdt__calc_pos_score,
+};
+#define init_TextMatcherCmdT(pvar) \
+    _txmcmdt_init(pvar)
+
+/* ########## class TextMatcherFactoryEntry(Object) ########## */
+static void _tmfent_init (/*TextMatcherFactoryEntry_T*/void* _self);
+static void _tmfent_destroy (/*TextMatcherFactoryEntry_T*/void* _self);
+static void _tmfent_set (/*TextMatcherFactoryEntry_T*/void* _self, char_u* name, NewObject_Fn fn_new);
+
+static _TextMatcherFactoryEntry_VT _vt_TextMatcherFactoryEntry = {
+    &_tmfent_destroy,
+    &_tmfent_set,
+};
+#define init_TextMatcherFactoryEntry(pvar) \
+    _tmfent_init(pvar)
+
+/* ########## class TextMatcherFactory ########## */
+static void _txmfac_init (/*TextMatcherFactory_T*/void* _self);
+static void _txmfac_destroy (/*TextMatcherFactory_T*/void* _self);
+static struct _TextMatcher_o* _txmfac_create_matcher (/*TextMatcherFactory_T*/void* _self, char_u* name);
+static char_u* _txmfac_next_matcher (/*TextMatcherFactory_T*/void* _self, char_u* name);
+
+static _TextMatcherFactory_VT _vt_TextMatcherFactory = {
+    &_txmfac_destroy,
+    &_txmfac_create_matcher,
+    &_txmfac_next_matcher,
+};
+#define init_TextMatcherFactory(pvar) \
+    _txmfac_init(pvar)
+
+/* ########## class ISearch ########## */
+static void _isrch_init (/*ISearch_T*/void* _self);
+static void _isrch_destroy (/*ISearch_T*/void* _self);
+static void _isrch_set_matcher (/*ISearch_T*/void* _self, struct _TextMatcher_o* pmatcher);
+static void _isrch_set_text (/*ISearch_T*/void* _self, char_u* ptext);
+static int _isrch_match (/*ISearch_T*/void* _self, char_u* ptext);
+
+static _ISearch_VT _vt_ISearch = {
+    &_isrch_destroy,
+    &_isrch_set_matcher,
+    &_isrch_set_text,
+    &_isrch_match,
+};
+#define init_ISearch(pvar) \
+    _isrch_init(pvar)
+
+/* ########## class FltComparator_Score(ItemComparator) ########## */
+static void _flcmpscr_init (/*FltComparator_Score_T*/void* _self);
+static int _flcmpscr_compare (/*FltComparator_Score_T*/void* _self, void* pia, void* pib);
+
+static _FltComparator_Score_VT _vt_FltComparator_Score = {
+    &_OOC_OBJECT_destroy,
+    &_flcmpscr_compare,
+};
+#define init_FltComparator_Score(pvar) \
+    _flcmpscr_init(pvar)
+
+/* ########## class FltComparator_TitleScore(ItemComparator) ########## */
+static void _flcmpttsc_init (/*FltComparator_TitleScore_T*/void* _self);
+static int _flcmpttsc_compare (/*FltComparator_TitleScore_T*/void* _self, void* pia, void* pib);
+
+static _FltComparator_TitleScore_VT _vt_FltComparator_TitleScore = {
+    &_OOC_OBJECT_destroy,
+    &_flcmpttsc_compare,
+};
+#define init_FltComparator_TitleScore(pvar) \
+    _flcmpttsc_init(pvar)
+
+/* ########## class ItemFilter ########## */
+static void _iflt_init (/*ItemFilter_T*/void* _self);
+static void _iflt_destroy (/*ItemFilter_T*/void* _self);
+static void _iflt_set_matcher (/*ItemFilter_T*/void* _self, struct _TextMatcher_o* pmatcher);
+static void _iflt_set_text (/*ItemFilter_T*/void* _self, char_u* ptext);
+static void _iflt_filter_items (/*ItemFilter_T*/void* _self);
+static int _iflt_get_item_count (/*ItemFilter_T*/void* _self);
+static int _iflt_is_active (/*ItemFilter_T*/void* _self);
+static int _iflt_get_model_index (/*ItemFilter_T*/void* _self, int index);
+static int _iflt_get_index_of (/*ItemFilter_T*/void* _self, int model_index);
+
+static _ItemFilter_VT _vt_ItemFilter = {
+    &_iflt_destroy,
+    &_iflt_set_matcher,
+    &_iflt_set_text,
+    &_iflt_filter_items,
+    &_iflt_get_item_count,
+    &_iflt_is_active,
+    &_iflt_get_model_index,
+    &_iflt_get_index_of,
+};
+#define init_ItemFilter(pvar) \
+    _iflt_init(pvar)
+
+/* ########## class BoxAligner(Object) ########## */
+static void _bxal_init (/*BoxAligner_T*/void* _self);
+static void _bxal_set_limits (/*BoxAligner_T*/void* _self, int left, int top, int right, int bottom);
+static void _bxal_parse_screen_pos (/*BoxAligner_T*/void* _self, char_u* posdef);
+static void _bxal_set_align_params (/*BoxAligner_T*/void* _self, dict_T* params);
+static void _bxal_align (/*BoxAligner_T*/void* _self, struct _Box_o* box, struct _WindowBorder_o* border);
+
+static _BoxAligner_VT _vt_BoxAligner = {
+    &_OOC_OBJECT_destroy,
+    &_bxal_set_limits,
+    &_bxal_parse_screen_pos,
+    &_bxal_set_align_params,
+    &_bxal_align,
+};
+#define init_BoxAligner(pvar) \
+    _bxal_init(pvar)
+
+/* ########## class SimpleKeymap(Object) ########## */
+static void _skmap_init (/*SimpleKeymap_T*/void* _self);
+static void _skmap_destroy (/*SimpleKeymap_T*/void* _self);
+static void _skmap_set_name (/*SimpleKeymap_T*/void* _self, char_u* name);
+static char_u* _skmap_encode_key (/*SimpleKeymap_T*/void* _self, char_u* sequence);
+static void _skmap_set_vim_key (/*SimpleKeymap_T*/void* _self, char_u* sequence, char_u* command);
+static void _skmap_set_key (/*SimpleKeymap_T*/void* _self, char_u* sequence, char_u* command);
+static char_u* _skmap_get_command (/*SimpleKeymap_T*/void* _self, char_u* sequence, int copy);
+static int _skmap_find_key (/*SimpleKeymap_T*/void* _self, char_u* sequence);
+static void _skmap_clear_all_keys (/*SimpleKeymap_T*/void* _self);
+
+static _SimpleKeymap_VT _vt_SimpleKeymap = {
+    &_skmap_destroy,
+    &_skmap_set_name,
+    &_skmap_encode_key,
+    &_skmap_set_vim_key,
+    &_skmap_set_key,
+    &_skmap_get_command,
+    &_skmap_find_key,
+    &_skmap_clear_all_keys,
+};
+#define init_SimpleKeymap(pvar) \
+    _skmap_init(pvar)
+
+/* ########## class WindowBorder(Object) ########## */
+static void _wbor_init (/*WindowBorder_T*/void* _self);
+static void _wbor_destroy (/*WindowBorder_T*/void* _self);
+static void _wbor_set_title (/*WindowBorder_T*/void* _self, char_u* title);
+static void _wbor_set_mode_text (/*WindowBorder_T*/void* _self, char_u* mode);
+static void _wbor_set_input_active (/*WindowBorder_T*/void* _self, int active);
+static void _wbor_set_info (/*WindowBorder_T*/void* _self, char_u* text);
+static void _wbor_prepare_scrollbar (/*WindowBorder_T*/void* _self, int item_count);
+static int _wbor_get_scrollbar_kind (/*WindowBorder_T*/void* _self, int line, int current);
+static void _wbor_draw_top (/*WindowBorder_T*/void* _self);
+static void _wbor_draw_item_left (/*WindowBorder_T*/void* _self, int line, int current);
+static void _wbor_draw_item_right (/*WindowBorder_T*/void* _self, int line, int current);
+static void _wbor_draw_bottom (/*WindowBorder_T*/void* _self);
+
+static _WindowBorder_VT _vt_WindowBorder = {
+    &_wbor_destroy,
+    &_wbor_set_title,
+    &_wbor_set_mode_text,
+    &_wbor_set_input_active,
+    &_wbor_set_info,
+    &_wbor_prepare_scrollbar,
+    &_wbor_get_scrollbar_kind,
+    &_wbor_draw_top,
+    &_wbor_draw_item_left,
+    &_wbor_draw_item_right,
+    &_wbor_draw_bottom,
+};
+#define init_WindowBorder(pvar) \
+    _wbor_init(pvar)
+
+/* ########## class PopupList ########## */
+static void _puls_init (/*PopupList_T*/void* _self);
+static void _puls_destroy (/*PopupList_T*/void* _self);
+static void _puls_set_model (/*PopupList_T*/void* _self, struct _ItemProvider_o* model);
+static void _puls_read_options (/*PopupList_T*/void* _self, dict_T* options);
+static void _puls_default_keymap (/*PopupList_T*/void* _self);
+static void _puls_map_keys (/*PopupList_T*/void* _self, char_u* kmap_name, dict_T* kmap);
+static int _puls_calc_size (/*PopupList_T*/void* _self, int limit_width, int limit_height);
+static void _puls_reposition (/*PopupList_T*/void* _self);
+static void _puls_update_hl_chain (/*PopupList_T*/void* _self);
+static void _puls_redraw (/*PopupList_T*/void* _self);
+static int _puls_refilter (/*PopupList_T*/void* _self, int track_item, int always_track);
+static void _puls_move_cursor (/*PopupList_T*/void* _self);
+static int _puls_do_command (/*PopupList_T*/void* _self, char_u* command);
+static void _puls_switch_mode (/*PopupList_T*/void* _self, char_u* modename);
+static void _puls_prepare_result (/*PopupList_T*/void* _self, dict_T* result);
+static void _puls_save_state (/*PopupList_T*/void* _self, dict_T* result);
+static void _puls_set_title (/*PopupList_T*/void* _self, char_u* title);
+static void _puls_set_current (/*PopupList_T*/void* _self, int index);
+static int _puls_do_isearch (/*PopupList_T*/void* _self, int dir);
+static int _puls_on_filter_change (/*PopupList_T*/void* _self, void* data);
+static int _puls_on_isearch_change (/*PopupList_T*/void* _self, void* data);
+static int _puls_on_model_title_changed (/*PopupList_T*/void* _self, void* data);
+static int _puls_process_command (/*PopupList_T*/void* _self, char_u* command);
+
+static _PopupList_VT _vt_PopupList = {
+    &_puls_destroy,
+    &_puls_set_model,
+    &_puls_read_options,
+    &_puls_default_keymap,
+    &_puls_map_keys,
+    &_puls_calc_size,
+    &_puls_reposition,
+    &_puls_update_hl_chain,
+    &_puls_redraw,
+    &_puls_refilter,
+    &_puls_move_cursor,
+    &_puls_do_command,
+    &_puls_switch_mode,
+    &_puls_prepare_result,
+    &_puls_save_state,
+    &_puls_set_title,
+    &_puls_set_current,
+    &_puls_do_isearch,
+    &_puls_on_filter_change,
+    &_puls_on_isearch_change,
+    &_puls_on_model_title_changed,
+    &_puls_process_command,
+};
+#define init_PopupList(pvar) \
+    _puls_init(pvar)
+
+/* ########## class BufferItemProvider(ItemProvider) ########## */
+#ifdef FEAT_POPUPLIST_BUFFERS
+static void _bprov_init (/*BufferItemProvider_T*/void* _self);
+static void _bprov_read_options (/*BufferItemProvider_T*/void* _self, dict_T* options);
+static void _bprov_on_start (/*BufferItemProvider_T*/void* _self);
+static void _bprov_default_keymap (/*BufferItemProvider_T*/void* _self, struct _PopupList_o* puls);
+static void _bprov_list_buffers (/*BufferItemProvider_T*/void* _self);
+static int _bprov_sort_buffers (/*BufferItemProvider_T*/void* _self);
+static char_u* _bprov_get_title (/*BufferItemProvider_T*/void* _self);
+static int _bprov__index_to_bufnr (/*BufferItemProvider_T*/void* _self, int index);
+static void _bprov_update_result (/*BufferItemProvider_T*/void* _self, dict_T* status);
+static char_u* _bprov_handle_command (/*BufferItemProvider_T*/void* _self, struct _PopupList_o* puls, char_u* command);
+
+static _BufferItemProvider_VT _vt_BufferItemProvider = {
+    &_iprov_destroy,
+    &_bprov_read_options,
+    &_bprov_on_start,
+    &_iprov_clear_items,
+    &_iprov_sync_items,
+    &_iprov_get_item_count,
+    &_iprov_get_item,
+    &_iprov_append_pchar_item,
+    &_iprov_get_display_text,
+    &_iprov_get_filter_text,
+    &_iprov_get_path_text,
+    &_bprov_get_title,
+    &_iprov_set_title,
+    &_iprov_set_marked,
+    &_iprov_has_flag,
+    &_iprov_select_item,
+    &_iprov_select_parent,
+    &_iprov_find_shortcut,
+    &_iprov_sort_items,
+    &_bprov_update_result,
+    &_bprov_handle_command,
+    &_iprov_vim_cb_command,
+    &_iprov__process_vim_cb_result,
+    &_bprov_default_keymap,
+    &_bprov_list_buffers,
+    &_bprov_sort_buffers,
+    &_bprov__index_to_bufnr,
+};
+#define init_BufferItemProvider(pvar) \
+    _bprov_init(pvar)
+#endif /* FEAT_POPUPLIST_BUFFERS */
+
+/* ########## class MenuItemProvider(ItemProvider) ########## */
+#ifdef FEAT_POPUPLIST_MENUS
+static void _mnupr_init (/*MenuItemProvider_T*/void* _self);
+static void _mnupr_find_menu (/*MenuItemProvider_T*/void* _self, char_u* menu_path);
+static void _mnupr_update_title (/*MenuItemProvider_T*/void* _self);
+static int _mnupr_parse_mode (/*MenuItemProvider_T*/void* _self, char_u* command);
+static int _mnupr_list_items (/*MenuItemProvider_T*/void* _self, void* selected);
+static int _mnupr__list_items_r (/*MenuItemProvider_T*/void* _self, vimmenu_T* menu, void* selected, int* count, int level);
+static int _mnupr_select_item (/*MenuItemProvider_T*/void* _self, int item);
+static int _mnupr_select_parent (/*MenuItemProvider_T*/void* _self);
+static void _mnupr_default_keymap (/*MenuItemProvider_T*/void* _self, struct _PopupList_o* puls);
+static char_u* _mnupr_handle_command (/*MenuItemProvider_T*/void* _self, struct _PopupList_o* puls, char_u* command);
+
+static _MenuItemProvider_VT _vt_MenuItemProvider = {
+    &_iprov_destroy,
+    &_iprov_read_options,
+    &_iprov_on_start,
+    &_iprov_clear_items,
+    &_iprov_sync_items,
+    &_iprov_get_item_count,
+    &_iprov_get_item,
+    &_iprov_append_pchar_item,
+    &_iprov_get_display_text,
+    &_iprov_get_filter_text,
+    &_iprov_get_path_text,
+    &_iprov_get_title,
+    &_iprov_set_title,
+    &_iprov_set_marked,
+    &_iprov_has_flag,
+    &_mnupr_select_item,
+    &_mnupr_select_parent,
+    &_iprov_find_shortcut,
+    &_iprov_sort_items,
+    &_iprov_update_result,
+    &_mnupr_handle_command,
+    &_iprov_vim_cb_command,
+    &_iprov__process_vim_cb_result,
+    &_mnupr_default_keymap,
+    &_mnupr_find_menu,
+    &_mnupr_update_title,
+    &_mnupr_parse_mode,
+    &_mnupr_list_items,
+    &_mnupr__list_items_r,
+};
+#define init_MenuItemProvider(pvar) \
+    _mnupr_init(pvar)
+#endif /* FEAT_POPUPLIST_MENUS */
+
+/* ########## class QuickfixItemProvider(ItemProvider) ########## */
+static void _qfxpr_init (/*QuickfixItemProvider_T*/void* _self);
+static void _qfxpr_destroy (/*QuickfixItemProvider_T*/void* _self);
+static char_u* _qfxpr_get_display_text (/*QuickfixItemProvider_T*/void* _self, int item);
+static int _qfxpr_list_items (/*QuickfixItemProvider_T*/void* _self);
+static void _qfxpr_on_start (/*QuickfixItemProvider_T*/void* _self);
+static int _qfxpr_select_item (/*QuickfixItemProvider_T*/void* _self, int item);
+static int _qfxpr__prepare_dispbuf (/*QuickfixItemProvider_T*/void* _self, int len);
+static void _qfxpr__update_title (/*QuickfixItemProvider_T*/void* _self);
+static int _qfxpr__display_item (/*QuickfixItemProvider_T*/void* _self, struct _PopupItem_o* pitem);
+
+static _QuickfixItemProvider_VT _vt_QuickfixItemProvider = {
+    &_qfxpr_destroy,
+    &_iprov_read_options,
+    &_qfxpr_on_start,
+    &_iprov_clear_items,
+    &_iprov_sync_items,
+    &_iprov_get_item_count,
+    &_iprov_get_item,
+    &_iprov_append_pchar_item,
+    &_qfxpr_get_display_text,
+    &_iprov_get_filter_text,
+    &_iprov_get_path_text,
+    &_iprov_get_title,
+    &_iprov_set_title,
+    &_iprov_set_marked,
+    &_iprov_has_flag,
+    &_qfxpr_select_item,
+    &_iprov_select_parent,
+    &_iprov_find_shortcut,
+    &_iprov_sort_items,
+    &_iprov_update_result,
+    &_iprov_handle_command,
+    &_iprov_vim_cb_command,
+    &_iprov__process_vim_cb_result,
+    &_iprov_default_keymap,
+    &_qfxpr_list_items,
+    &_qfxpr__prepare_dispbuf,
+    &_qfxpr__update_title,
+    &_qfxpr__display_item,
+};
+#define init_QuickfixItemProvider(pvar) \
+    _qfxpr_init(pvar)
+
+/* ########## class LineWriter(Object) ########## */
+static void _plwr_init (/*LineWriter_T*/void* _self);
+static void _plwr_add_fixed_tab (/*LineWriter_T*/void* _self, int col);
+static int _plwr_get_tab_size_at (/*LineWriter_T*/void* _self, int col);
+static void _plwr_set_limits (/*LineWriter_T*/void* _self, int min_col, int max_col);
+static void _plwr_write_line (/*LineWriter_T*/void* _self, char_u* text, int row, int attr, int fillChar);
+
+static _LineWriter_VT _vt_LineWriter = {
+    &_OOC_OBJECT_destroy,
+    &_plwr_add_fixed_tab,
+    &_plwr_get_tab_size_at,
+    &_plwr_set_limits,
+    &_plwr_write_line,
+};
+#define init_LineWriter(pvar) \
+    _plwr_init(pvar)
+
+/* ########## class Highlighter(Object) ########## */
+static void _hltr_init (/*Highlighter_T*/void* _self);
+static void _hltr_bol_init (/*Highlighter_T*/void* _self, char_u* text, void* extra_data);
+static int _hltr_calc_attr (/*Highlighter_T*/void* _self, char_u* next_char);
+
+static _Highlighter_VT _vt_Highlighter = {
+    &_OOC_OBJECT_destroy,
+    &_hltr_bol_init,
+    &_hltr_calc_attr,
+};
+#define init_Highlighter(pvar) \
+    _hltr_init(pvar)
+
+/* ########## class ShortcutHighlighter(Highlighter) ########## */
+static void _hlshrt_init (/*ShortcutHighlighter_T*/void* _self);
+static int _hlshrt_calc_attr (/*ShortcutHighlighter_T*/void* _self, char_u* next_char);
+
+static _ShortcutHighlighter_VT _vt_ShortcutHighlighter = {
+    &_OOC_OBJECT_destroy,
+    &_hltr_bol_init,
+    &_hlshrt_calc_attr,
+};
+#define init_ShortcutHighlighter(pvar) \
+    _hlshrt_init(pvar)
+
+/* ########## class TextMatchHighlighter(Highlighter) ########## */
+static void _hltxm_init (/*TextMatchHighlighter_T*/void* _self);
+static void _hltxm_set_matcher (/*TextMatchHighlighter_T*/void* _self, struct _TextMatcher_o* matcher);
+static void _hltxm_bol_init (/*TextMatchHighlighter_T*/void* _self, char_u* text, void* extra_data);
+static int _hltxm_calc_attr (/*TextMatchHighlighter_T*/void* _self, char_u* next_char);
+
+static _TextMatchHighlighter_VT _vt_TextMatchHighlighter = {
+    &_OOC_OBJECT_destroy,
+    &_hltxm_bol_init,
+    &_hltxm_calc_attr,
+    &_hltxm_set_matcher,
+};
+#define init_TextMatchHighlighter(pvar) \
+    _hltxm_init(pvar)
+
+/* ########## class LineHighlightWriter(LineWriter) ########## */
+static void _plhlwr_init (/*LineHighlightWriter_T*/void* _self);
+static void _plhlwr_destroy (/*LineHighlightWriter_T*/void* _self);
+static void _plhlwr_write_line (/*LineHighlightWriter_T*/void* _self, char_u* text, int row, int init_attr, int fillChar);
+static int _plhlwr__flush (/*LineHighlightWriter_T*/void* _self, char_u* text_end, int row, int col, int attr);
+
+static _LineHighlightWriter_VT _vt_LineHighlightWriter = {
+    &_plhlwr_destroy,
+    &_plwr_add_fixed_tab,
+    &_plwr_get_tab_size_at,
+    &_plwr_set_limits,
+    &_plhlwr_write_line,
+    &_plhlwr__flush,
+};
+#define init_LineHighlightWriter(pvar) \
+    _plhlwr_init(pvar)
+
+
+#define METHOD(classname, name) \
+        { \
+            typedef classname##_T* SELF_T; \
+            _##classname##_##name##_BODY()
+    
+#define END_DESTROY(classname) \
+            _##classname##_DESTROY() \
+        }
+
+#define END_METHOD \
+        }
+
+# define self \
+        ((SELF_T)_self)
+
+# define super(classname, methodname) \
+        _super_vt_##classname##_##methodname().methodname
+
+#define CAST_CLASS(var, classname) \
+        classname##_T* var = (classname##_T*) _##var
+
+#define CAST_STRUCT(var, structname) \
+        structname##_T* var = (structname##_T*) _##var
+
+#define CLASS_DELETE(pobj) \
+        if (pobj) \
+        { \
+           pobj->op->destroy(pobj); \
+           vim_free(pobj); \
+           pobj = NULL; \
+        }
+    
+
+/* --------------------------- */
+/* Skeletons for class methods */
+/* --------------------------- */
+/* Object */
+#define _Object_init_BODY()\
+    self->op = &_vt_Object;\
+
+    static void
+_OOC_OBJECT_init(_self)
+    void* _self;
+METHOD(Object, init);
+{
+END_METHOD
+}
+
+#define _Object_destroy_BODY()\
+
+#define _Object_DESTROY() \
+
+    static void
+_OOC_OBJECT_destroy(_self)
+    void* _self;
+METHOD(Object, destroy);
+{
+END_DESTROY(Object);
+}
+
+/*-
+    Object_T*
+new_Object()
+{
+Object_T* _OOC_OBJECT = (Object_T*) alloc(sizeof(Object_T));
+if (! _OOC_OBJECT)
+    return NULL;
+_OOC_OBJECT_init(_OOC_OBJECT);
+return _OOC_OBJECT;
+}
+-*/
+
+/* ItemComparator */
+#define _super_vt_ItemComparator_init() _vt_Object
+
+#define _ItemComparator_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_ItemComparator;\
+
+/*-
+    static void
+_icmprtr_init(_self)
+    void* _self;
+METHOD(ItemComparator, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemComparator_compare_BODY()\
+
+/*-
+    static int
+_icmprtr_compare(_self, a, b)
+    void* _self;
+    void* a;
+    void* b;
+METHOD(ItemComparator, compare);
+{
+END_METHOD
+}
+-*/
+
+    ItemComparator_T*
+new_ItemComparator()
+{
+ItemComparator_T* _icmprtr = (ItemComparator_T*) alloc(sizeof(ItemComparator_T));
+if (! _icmprtr)
+    return NULL;
+_icmprtr_init(_icmprtr);
+return _icmprtr;
+}
+
+/* ItemMatcher */
+#define _super_vt_ItemMatcher_init() _vt_Object
+
+#define _ItemMatcher_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_ItemMatcher;\
+
+/*-
+    static void
+_imtchr_init(_self)
+    void* _self;
+METHOD(ItemMatcher, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemMatcher_match_BODY()\
+
+/*-
+    static int
+_imtchr_match(_self, item)
+    void* _self;
+    void* item;
+METHOD(ItemMatcher, match);
+{
+END_METHOD
+}
+-*/
+
+    ItemMatcher_T*
+new_ItemMatcher()
+{
+ItemMatcher_T* _imtchr = (ItemMatcher_T*) alloc(sizeof(ItemMatcher_T));
+if (! _imtchr)
+    return NULL;
+_imtchr_init(_imtchr);
+return _imtchr;
+}
+
+/* ListHelper */
+#define _super_vt_ListHelper_init() _vt_Object
+
+#define _ListHelper_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_ListHelper;\
+
+/*-
+    static void
+_lsthlpr_init(_self)
+    void* _self;
+METHOD(ListHelper, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_add_head_BODY()\
+
+/*-
+    static void
+_lsthlpr_add_head(_self, item)
+    void* _self;
+    void* item;
+METHOD(ListHelper, add_head);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_add_tail_BODY()\
+
+/*-
+    static void
+_lsthlpr_add_tail(_self, item)
+    void* _self;
+    void* item;
+METHOD(ListHelper, add_tail);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_remove_BODY()\
+
+/*-
+    static void*
+_lsthlpr_remove(_self, item)
+    void* _self;
+    void* item;
+METHOD(ListHelper, remove);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_remove_head_BODY()\
+
+/*-
+    static void*
+_lsthlpr_remove_head(_self)
+    void* _self;
+METHOD(ListHelper, remove_head);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper__rem_del_all_BODY()\
+
+/*-
+    static int
+_lsthlpr__rem_del_all(_self, cond, dodel)
+    void* _self;
+    ItemMatcher_T* cond;
+    int dodel;
+METHOD(ListHelper, _rem_del_all);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_remove_all_BODY()\
+
+/*-
+    static int
+_lsthlpr_remove_all(_self, cond)
+    void* _self;
+    ItemMatcher_T* cond;
+METHOD(ListHelper, remove_all);
+{
+END_METHOD
+}
+-*/
+
+#define _ListHelper_delete_all_BODY()\
+
+/*-
+    static int
+_lsthlpr_delete_all(_self, cond)
+    void* _self;
+    ItemMatcher_T* cond;
+METHOD(ListHelper, delete_all);
+{
+END_METHOD
+}
+-*/
+
+    ListHelper_T*
+new_ListHelper()
+{
+ListHelper_T* _lsthlpr = (ListHelper_T*) alloc(sizeof(ListHelper_T));
+if (! _lsthlpr)
+    return NULL;
+_lsthlpr_init(_lsthlpr);
+return _lsthlpr;
+}
+
+/* DictIterator */
+#define _super_vt_DictIterator_init() _vt_Object
+
+#define _DictIterator_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_DictIterator;\
+
+/*-
+    static void
+_dicti_init(_self)
+    void* _self;
+METHOD(DictIterator, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_DictIterator_destroy() _vt_Object
+
+#define _DictIterator_destroy_BODY()\
+
+#define _DictIterator_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_dicti_destroy(_self)
+    void* _self;
+METHOD(DictIterator, destroy);
+{
+END_DESTROY(DictIterator);
+}
+-*/
+
+#define _DictIterator_begin_BODY()\
+
+/*-
+    static dictitem_T*
+_dicti_begin(_self, dict)
+    void* _self;
+    dict_T* dict;
+METHOD(DictIterator, begin);
+{
+END_METHOD
+}
+-*/
+
+#define _DictIterator_next_BODY()\
+
+/*-
+    static dictitem_T*
+_dicti_next(_self)
+    void* _self;
+METHOD(DictIterator, next);
+{
+END_METHOD
+}
+-*/
+
+    DictIterator_T*
+new_DictIterator()
+{
+DictIterator_T* _dicti = (DictIterator_T*) alloc(sizeof(DictIterator_T));
+if (! _dicti)
+    return NULL;
+_dicti_init(_dicti);
+return _dicti;
+}
+
+/* SegmentedGrowArray */
+#define _super_vt_SegmentedGrowArray_init() _vt_Object
+
+#define _SegmentedGrowArray_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_SegmentedGrowArray;\
+
+/*-
+    static void
+_sgarr_init(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_SegmentedGrowArray_destroy() _vt_Object
+
+#define _SegmentedGrowArray_destroy_BODY()\
+
+#define _SegmentedGrowArray_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_sgarr_destroy(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, destroy);
+{
+END_DESTROY(SegmentedGrowArray);
+}
+-*/
+
+#define _SegmentedGrowArray_clear_BODY()\
+
+/*-
+    static void
+_sgarr_clear(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, clear);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_clear_contents_BODY()\
+
+/*-
+    static void
+_sgarr_clear_contents(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, clear_contents);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_truncate_BODY()\
+
+/*-
+    static void
+_sgarr_truncate(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, truncate);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_grow_BODY()\
+
+/*-
+    static int
+_sgarr_grow(_self, count)
+    void* _self;
+    int count;
+METHOD(SegmentedGrowArray, grow);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_get_new_item_BODY()\
+
+/*-
+    static void*
+_sgarr_get_new_item(_self)
+    void* _self;
+METHOD(SegmentedGrowArray, get_new_item);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_get_item_BODY()\
+
+/*-
+    static void*
+_sgarr_get_item(_self, index)
+    void* _self;
+    int index;
+METHOD(SegmentedGrowArray, get_item);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray_sort_BODY()\
+
+/*-
+    static void
+_sgarr_sort(_self, cmp)
+    void* _self;
+    ItemComparator_T* cmp;
+METHOD(SegmentedGrowArray, sort);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedGrowArray__qsort_BODY()\
+
+/*-
+    static void
+_sgarr__qsort(_self, low, high, cmp)
+    void* _self;
+    int low;
+    int high;
+    ItemComparator_T* cmp;
+METHOD(SegmentedGrowArray, _qsort);
+{
+END_METHOD
+}
+-*/
+
+    SegmentedGrowArray_T*
+new_SegmentedGrowArray()
+{
+SegmentedGrowArray_T* _sgarr = (SegmentedGrowArray_T*) alloc(sizeof(SegmentedGrowArray_T));
+if (! _sgarr)
+    return NULL;
+_sgarr_init(_sgarr);
+return _sgarr;
+}
+
+/* SegmentedArrayIterator */
+#define _super_vt_SegmentedArrayIterator_init() _vt_Object
+
+#define _SegmentedArrayIterator_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_SegmentedArrayIterator;\
+
+/*-
+    static void
+_itsgarr_init(_self)
+    void* _self;
+METHOD(SegmentedArrayIterator, init);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedArrayIterator_begin_BODY()\
+
+/*-
+    static void*
+_itsgarr_begin(_self, container)
+    void* _self;
+    SegmentedGrowArray_T* container;
+METHOD(SegmentedArrayIterator, begin);
+{
+END_METHOD
+}
+-*/
+
+#define _SegmentedArrayIterator_next_BODY()\
+
+/*-
+    static void*
+_itsgarr_next(_self)
+    void* _self;
+METHOD(SegmentedArrayIterator, next);
+{
+END_METHOD
+}
+-*/
+
+    SegmentedArrayIterator_T*
+new_SegmentedArrayIterator()
+{
+SegmentedArrayIterator_T* _itsgarr = (SegmentedArrayIterator_T*) alloc(sizeof(SegmentedArrayIterator_T));
+if (! _itsgarr)
+    return NULL;
+_itsgarr_init(_itsgarr);
+return _itsgarr;
+}
+
+/* NotificationCallback */
+#define _NotificationCallback_init_BODY()\
+
+/*-
+    static void
+_ntfcb_init(_self)
+    void* _self;
+METHOD(NotificationCallback, init);
+{
+END_METHOD
+}
+-*/
+
+#define _NotificationCallback_call_BODY()\
+
+/*-
+    static int
+_ntfcb_call(_self, data)
+    void* _self;
+    void* data;
+METHOD(NotificationCallback, call);
+{
+END_METHOD
+}
+-*/
+
+    NotificationCallback_T*
+new_NotificationCallback()
+{
+NotificationCallback_T* _ntfcb = (NotificationCallback_T*) alloc(sizeof(NotificationCallback_T));
+if (! _ntfcb)
+    return NULL;
+_ntfcb_init(_ntfcb);
+return _ntfcb;
+}
+
+/* NotificationList */
+#define _super_vt_NotificationList_init() _vt_Object
+
+#define _NotificationList_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_NotificationList;\
+    /* INIT lst_observers ListHelper */\
+    _lsthlpr_init(&self->lst_observers);\
+
+/*-
+    static void
+_ntlst_init(_self)
+    void* _self;
+METHOD(NotificationList, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_NotificationList_destroy() _vt_Object
+
+#define _NotificationList_destroy_BODY()\
+
+#define _NotificationList_DESTROY() \
+    /* DESTROY lst_observers ListHelper */\
+    _OOC_OBJECT_destroy(&self->lst_observers);\
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_ntlst_destroy(_self)
+    void* _self;
+METHOD(NotificationList, destroy);
+{
+END_DESTROY(NotificationList);
+}
+-*/
+
+#define _NotificationList_notify_BODY()\
+
+/*-
+    static void
+_ntlst_notify(_self, _data)
+    void* _self;
+    void* _data;
+METHOD(NotificationList, notify);
+{
+END_METHOD
+}
+-*/
+
+#define _NotificationList_add_BODY()\
+
+/*-
+    static void
+_ntlst_add(_self, instance, callback)
+    void* _self;
+    void* instance;
+    MethodCallback_Fn callback;
+METHOD(NotificationList, add);
+{
+END_METHOD
+}
+-*/
+
+#define _NotificationList_remove_obj_BODY()\
+
+/*-
+    static void
+_ntlst_remove_obj(_self, instance)
+    void* _self;
+    void* instance;
+METHOD(NotificationList, remove_obj);
+{
+END_METHOD
+}
+-*/
+
+#define _NotificationList_remove_cb_BODY()\
+
+/*-
+    static void
+_ntlst_remove_cb(_self, callback)
+    void* _self;
+    MethodCallback_Fn callback;
+METHOD(NotificationList, remove_cb);
+{
+END_METHOD
+}
+-*/
+
+    NotificationList_T*
+new_NotificationList()
+{
+NotificationList_T* _ntlst = (NotificationList_T*) alloc(sizeof(NotificationList_T));
+if (! _ntlst)
+    return NULL;
+_ntlst_init(_ntlst);
+return _ntlst;
+}
+
+/* CommandQueueItem */
+#define _super_vt_CommandQueueItem_init() _vt_Object
+
+#define _CommandQueueItem_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_CommandQueueItem;\
+
+/*-
+    static void
+_cmdqit_init(_self)
+    void* _self;
+METHOD(CommandQueueItem, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_CommandQueueItem_destroy() _vt_Object
+
+#define _CommandQueueItem_destroy_BODY()\
+
+#define _CommandQueueItem_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_cmdqit_destroy(_self)
+    void* _self;
+METHOD(CommandQueueItem, destroy);
+{
+END_DESTROY(CommandQueueItem);
+}
+-*/
+
+    CommandQueueItem_T*
+new_CommandQueueItem()
+{
+CommandQueueItem_T* _cmdqit = (CommandQueueItem_T*) alloc(sizeof(CommandQueueItem_T));
+if (! _cmdqit)
+    return NULL;
+_cmdqit_init(_cmdqit);
+return _cmdqit;
+}
+
+/* CommandQueue */
+#define _super_vt_CommandQueue_init() _vt_Object
+
+#define _CommandQueue_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_CommandQueue;\
+
+/*-
+    static void
+_cmdque_init(_self)
+    void* _self;
+METHOD(CommandQueue, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_CommandQueue_destroy() _vt_Object
+
+#define _CommandQueue_destroy_BODY()\
+
+#define _CommandQueue_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_cmdque_destroy(_self)
+    void* _self;
+METHOD(CommandQueue, destroy);
+{
+END_DESTROY(CommandQueue);
+}
+-*/
+
+#define _CommandQueue_add_BODY()\
+
+/*-
+    static void
+_cmdque_add(_self, command)
+    void* _self;
+    char_u* command;
+METHOD(CommandQueue, add);
+{
+END_METHOD
+}
+-*/
+
+#define _CommandQueue_pop_BODY()\
+
+/*-
+    static void
+_cmdque_pop(_self)
+    void* _self;
+METHOD(CommandQueue, pop);
+{
+END_METHOD
+}
+-*/
+
+#define _CommandQueue_head_BODY()\
+
+/*-
+    static char_u*
+_cmdque_head(_self)
+    void* _self;
+METHOD(CommandQueue, head);
+{
+END_METHOD
+}
+-*/
+
+    CommandQueue_T*
+new_CommandQueue()
+{
+CommandQueue_T* _cmdque = (CommandQueue_T*) alloc(sizeof(CommandQueue_T));
+if (! _cmdque)
+    return NULL;
+_cmdque_init(_cmdque);
+return _cmdque;
+}
+
+/* PopupItem */
+#define _PopupItem_init_BODY()\
+
+/*-
+    static void
+_ppit_init(_self)
+    void* _self;
+METHOD(PopupItem, init);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupItem_destroy_BODY()\
+
+#define _PopupItem_DESTROY() \
+
+/*-
+    static void
+_ppit_destroy(_self)
+    void* _self;
+METHOD(PopupItem, destroy);
+{
+END_DESTROY(PopupItem);
+}
+-*/
+
+    PopupItem_T*
+new_PopupItem()
+{
+PopupItem_T* _ppit = (PopupItem_T*) alloc(sizeof(PopupItem_T));
+if (! _ppit)
+    return NULL;
+_ppit_init(_ppit);
+return _ppit;
+}
+
+/* ItemProvider */
+#define _ItemProvider_init_BODY()\
+    self->op = &_vt_ItemProvider;\
+    /* INIT title_obsrvrs NotificationList */\
+    _ntlst_init(&self->title_obsrvrs);\
+
+/*-
+    static void
+_iprov_init(_self)
+    void* _self;
+METHOD(ItemProvider, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_destroy_BODY()\
+
+#define _ItemProvider_DESTROY() \
+    /* DESTROY title_obsrvrs NotificationList */\
+    _ntlst_destroy(&self->title_obsrvrs);\
+
+/*-
+    static void
+_iprov_destroy(_self)
+    void* _self;
+METHOD(ItemProvider, destroy);
+{
+END_DESTROY(ItemProvider);
+}
+-*/
+
+#define _ItemProvider_read_options_BODY()\
+
+/*-
+    static void
+_iprov_read_options(_self, options)
+    void* _self;
+    dict_T* options;
+METHOD(ItemProvider, read_options);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_on_start_BODY()\
+
+/*-
+    static void
+_iprov_on_start(_self)
+    void* _self;
+METHOD(ItemProvider, on_start);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_clear_items_BODY()\
+
+/*-
+    static void
+_iprov_clear_items(_self)
+    void* _self;
+METHOD(ItemProvider, clear_items);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_sync_items_BODY()\
+
+/*-
+    static void
+_iprov_sync_items(_self)
+    void* _self;
+METHOD(ItemProvider, sync_items);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_item_count_BODY()\
+
+/*-
+    static int
+_iprov_get_item_count(_self)
+    void* _self;
+METHOD(ItemProvider, get_item_count);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_item_BODY()\
+
+/*-
+    static PopupItem_T*
+_iprov_get_item(_self, item)
+    void* _self;
+    int item;
+METHOD(ItemProvider, get_item);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_append_pchar_item_BODY()\
+
+/*-
+    static PopupItem_T*
+_iprov_append_pchar_item(_self, text, shared)
+    void* _self;
+    char_u* text;
+    int shared;
+METHOD(ItemProvider, append_pchar_item);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_display_text_BODY()\
+
+/*-
+    static char_u*
+_iprov_get_display_text(_self, item)
+    void* _self;
+    int item;
+METHOD(ItemProvider, get_display_text);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_filter_text_BODY()\
+
+/*-
+    static char_u*
+_iprov_get_filter_text(_self, item)
+    void* _self;
+    int item;
+METHOD(ItemProvider, get_filter_text);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_path_text_BODY()\
+
+/*-
+    static char_u*
+_iprov_get_path_text(_self)
+    void* _self;
+METHOD(ItemProvider, get_path_text);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_get_title_BODY()\
+
+/*-
+    static char_u*
+_iprov_get_title(_self)
+    void* _self;
+METHOD(ItemProvider, get_title);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_set_title_BODY()\
+
+/*-
+    static void
+_iprov_set_title(_self, title)
+    void* _self;
+    char_u* title;
+METHOD(ItemProvider, set_title);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_set_marked_BODY()\
+
+/*-
+    static void
+_iprov_set_marked(_self, item, marked)
+    void* _self;
+    int item;
+    int marked;
+METHOD(ItemProvider, set_marked);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_has_flag_BODY()\
+
+/*-
+    static uint
+_iprov_has_flag(_self, item, flag)
+    void* _self;
+    int item;
+    uint flag;
+METHOD(ItemProvider, has_flag);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_select_item_BODY()\
+
+/*-
+    static int
+_iprov_select_item(_self, item)
+    void* _self;
+    int item;
+METHOD(ItemProvider, select_item);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_select_parent_BODY()\
+
+/*-
+    static int
+_iprov_select_parent(_self)
+    void* _self;
+METHOD(ItemProvider, select_parent);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_find_shortcut_BODY()\
+
+/*-
+    static int
+_iprov_find_shortcut(_self, qchar_mb, startidx, index, unique)
+    void* _self;
+    char_u* qchar_mb;
+    int startidx;
+    int* index;
+    int* unique;
+METHOD(ItemProvider, find_shortcut);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_sort_items_BODY()\
+
+/*-
+    static int
+_iprov_sort_items(_self, cmp)
+    void* _self;
+    ItemComparator_T* cmp;
+METHOD(ItemProvider, sort_items);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_update_result_BODY()\
+
+/*-
+    static void
+_iprov_update_result(_self, status)
+    void* _self;
+    dict_T* status;
+METHOD(ItemProvider, update_result);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_handle_command_BODY()\
+
+/*-
+    static char_u*
+_iprov_handle_command(_self, puls, command)
+    void* _self;
+    PopupList_T* puls;
+    char_u* command;
+METHOD(ItemProvider, handle_command);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_vim_cb_command_BODY()\
+
+/*-
+    static int
+_iprov_vim_cb_command(_self, puls, command, rettv)
+    void* _self;
+    PopupList_T* puls;
+    char_u* command;
+    typval_T* rettv;
+METHOD(ItemProvider, vim_cb_command);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider__process_vim_cb_result_BODY()\
+
+/*-
+    static void
+_iprov__process_vim_cb_result(_self, puls, options)
+    void* _self;
+    PopupList_T* puls;
+    dict_T* options;
+METHOD(ItemProvider, _process_vim_cb_result);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemProvider_default_keymap_BODY()\
+
+/*-
+    static void
+_iprov_default_keymap(_self, puls)
+    void* _self;
+    PopupList_T* puls;
+METHOD(ItemProvider, default_keymap);
+{
+END_METHOD
+}
+-*/
+
+    ItemProvider_T*
+new_ItemProvider()
+{
+ItemProvider_T* _iprov = (ItemProvider_T*) alloc(sizeof(ItemProvider_T));
+if (! _iprov)
+    return NULL;
+_iprov_init(_iprov);
+return _iprov;
+}
+
+/* VimlistItemProvider */
+#define _super_vt_VimlistItemProvider_init() _vt_ItemProvider
+
+#define _VimlistItemProvider_init_BODY()\
+    _iprov_init(_self);\
+    self->op = &_vt_VimlistItemProvider;\
+
+/*-
+    static void
+_vlprov_init(_self)
+    void* _self;
+METHOD(VimlistItemProvider, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_destroy() _vt_ItemProvider
+
+#define _VimlistItemProvider_destroy_BODY()\
+
+#define _VimlistItemProvider_DESTROY() \
+    _iprov_destroy(_self);\
+
+/*-
+    static void
+_vlprov_destroy(_self)
+    void* _self;
+METHOD(VimlistItemProvider, destroy);
+{
+END_DESTROY(VimlistItemProvider);
+}
+-*/
+
+#define _VimlistItemProvider__cache_list_item_BODY()\
+
+/*-
+    static PopupItem_T*
+_vlprov__cache_list_item(_self, item)
+    void* _self;
+    listitem_T* item;
+METHOD(VimlistItemProvider, _cache_list_item);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_sync_items() _vt_ItemProvider
+
+#define _VimlistItemProvider_sync_items_BODY()\
+
+/*-
+    static void
+_vlprov_sync_items(_self)
+    void* _self;
+METHOD(VimlistItemProvider, sync_items);
+{
+END_METHOD
+}
+-*/
+
+#define _VimlistItemProvider_set_list_BODY()\
+
+/*-
+    static void
+_vlprov_set_list(_self, vimlist)
+    void* _self;
+    list_T* vimlist;
+METHOD(VimlistItemProvider, set_list);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_read_options() _vt_ItemProvider
+
+#define _VimlistItemProvider_read_options_BODY()\
+
+/*-
+    static void
+_vlprov_read_options(_self, options)
+    void* _self;
+    dict_T* options;
+METHOD(VimlistItemProvider, read_options);
+{
+END_METHOD
+}
+-*/
+
+#define _VimlistItemProvider_update_titles_BODY()\
+
+/*-
+    static void
+_vlprov_update_titles(_self)
+    void* _self;
+METHOD(VimlistItemProvider, update_titles);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_get_display_text() _vt_ItemProvider
+
+#define _VimlistItemProvider_get_display_text_BODY()\
+
+/*-
+    static char_u*
+_vlprov_get_display_text(_self, item)
+    void* _self;
+    int item;
+METHOD(VimlistItemProvider, get_display_text);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_update_result() _vt_ItemProvider
+
+#define _VimlistItemProvider_update_result_BODY()\
+
+/*-
+    static void
+_vlprov_update_result(_self, status)
+    void* _self;
+    dict_T* status;
+METHOD(VimlistItemProvider, update_result);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_VimlistItemProvider_handle_command() _vt_ItemProvider
+
+#define _VimlistItemProvider_handle_command_BODY()\
+
+/*-
+    static char_u*
+_vlprov_handle_command(_self, puls, command)
+    void* _self;
+    PopupList_T* puls;
+    char_u* command;
+METHOD(VimlistItemProvider, handle_command);
+{
+END_METHOD
+}
+-*/
+
+    VimlistItemProvider_T*
+new_VimlistItemProvider()
+{
+VimlistItemProvider_T* _vlprov = (VimlistItemProvider_T*) alloc(sizeof(VimlistItemProvider_T));
+if (! _vlprov)
+    return NULL;
+_vlprov_init(_vlprov);
+return _vlprov;
+}
+
+/* Box */
+#define _Box_init_BODY()\
+
+/*-
+    static void
+_box_init(_self)
+    void* _self;
+METHOD(Box, init);
+{
+END_METHOD
+}
+-*/
+
+#define _Box_right_BODY()\
+
+/*-
+    static int
+_box_right(_self)
+    void* _self;
+METHOD(Box, right);
+{
+END_METHOD
+}
+-*/
+
+#define _Box_bottom_BODY()\
+
+/*-
+    static int
+_box_bottom(_self)
+    void* _self;
+METHOD(Box, bottom);
+{
+END_METHOD
+}
+-*/
+
+#define _Box_move_BODY()\
+
+/*-
+    static void
+_box_move(_self, x, y)
+    void* _self;
+    int x;
+    int y;
+METHOD(Box, move);
+{
+END_METHOD
+}
+-*/
+
+    Box_T*
+new_Box()
+{
+Box_T* _box = (Box_T*) alloc(sizeof(Box_T));
+if (! _box)
+    return NULL;
+_box_init(_box);
+return _box;
+}
+
+/* LineEdit */
+#define _LineEdit_init_BODY()\
+    self->op = &_vt_LineEdit;\
+    /* INIT change_obsrvrs NotificationList */\
+    _ntlst_init(&self->change_obsrvrs);\
+
+/*-
+    static void
+_lned_init(_self)
+    void* _self;
+METHOD(LineEdit, init);
+{
+END_METHOD
+}
+-*/
+
+#define _LineEdit_destroy_BODY()\
+
+#define _LineEdit_DESTROY() \
+    /* DESTROY change_obsrvrs NotificationList */\
+    _ntlst_destroy(&self->change_obsrvrs);\
+
+/*-
+    static void
+_lned_destroy(_self)
+    void* _self;
+METHOD(LineEdit, destroy);
+{
+END_DESTROY(LineEdit);
+}
+-*/
+
+#define _LineEdit_set_text_BODY()\
+
+/*-
+    static void
+_lned_set_text(_self, ptext)
+    void* _self;
+    char_u* ptext;
+METHOD(LineEdit, set_text);
+{
+END_METHOD
+}
+-*/
+
+#define _LineEdit_add_text_BODY()\
+
+/*-
+    static int
+_lned_add_text(_self, ptext)
+    void* _self;
+    char_u* ptext;
+METHOD(LineEdit, add_text);
+{
+END_METHOD
+}
+-*/
+
+#define _LineEdit_backspace_BODY()\
+
+/*-
+    static int
+_lned_backspace(_self)
+    void* _self;
+METHOD(LineEdit, backspace);
+{
+END_METHOD
+}
+-*/
+
+    LineEdit_T*
+new_LineEdit()
+{
+LineEdit_T* _lned = (LineEdit_T*) alloc(sizeof(LineEdit_T));
+if (! _lned)
+    return NULL;
+_lned_init(_lned);
+return _lned;
+}
+
+/* TextMatcher */
+#define _super_vt_TextMatcher_init() _vt_Object
+
+#define _TextMatcher_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_TextMatcher;\
+
+/*-
+    static void
+_txm_init(_self)
+    void* _self;
+METHOD(TextMatcher, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcher_destroy() _vt_Object
+
+#define _TextMatcher_destroy_BODY()\
+
+#define _TextMatcher_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_txm_destroy(_self)
+    void* _self;
+METHOD(TextMatcher, destroy);
+{
+END_DESTROY(TextMatcher);
+}
+-*/
+
+#define _TextMatcher_set_search_str_BODY()\
+
+/*-
+    static void
+_txm_set_search_str(_self, needle)
+    void* _self;
+    char_u* needle;
+METHOD(TextMatcher, set_search_str);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcher_match_BODY()\
+
+/*-
+    static ulong
+_txm_match(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcher, match);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcher_init_highlight_BODY()\
+
+/*-
+    static void
+_txm_init_highlight(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcher, init_highlight);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcher_get_match_at_BODY()\
+
+/*-
+    static int
+_txm_get_match_at(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcher, get_match_at);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcher_T*
+new_TextMatcher()
+{
+TextMatcher_T* _txm = (TextMatcher_T*) alloc(sizeof(TextMatcher_T));
+if (! _txm)
+    return NULL;
+_txm_init(_txm);
+return _txm;
+}
+
+/* TextMatcherRegexp */
+#define _super_vt_TextMatcherRegexp_init() _vt_TextMatcher
+
+#define _TextMatcherRegexp_init_BODY()\
+    _txm_init(_self);\
+    self->op = &_vt_TextMatcherRegexp;\
+
+/*-
+    static void
+_txmrgxp_init(_self)
+    void* _self;
+METHOD(TextMatcherRegexp, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherRegexp_destroy() _vt_TextMatcher
+
+#define _TextMatcherRegexp_destroy_BODY()\
+
+#define _TextMatcherRegexp_DESTROY() \
+    _txm_destroy(_self);\
+
+/*-
+    static void
+_txmrgxp_destroy(_self)
+    void* _self;
+METHOD(TextMatcherRegexp, destroy);
+{
+END_DESTROY(TextMatcherRegexp);
+}
+-*/
+
+#define _super_vt_TextMatcherRegexp_set_search_str() _vt_TextMatcher
+
+#define _TextMatcherRegexp_set_search_str_BODY()\
+
+/*-
+    static void
+_txmrgxp_set_search_str(_self, needle)
+    void* _self;
+    char_u* needle;
+METHOD(TextMatcherRegexp, set_search_str);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherRegexp_match() _vt_TextMatcher
+
+#define _TextMatcherRegexp_match_BODY()\
+
+/*-
+    static ulong
+_txmrgxp_match(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherRegexp, match);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherRegexp_init_highlight() _vt_TextMatcher
+
+#define _TextMatcherRegexp_init_highlight_BODY()\
+
+/*-
+    static void
+_txmrgxp_init_highlight(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherRegexp, init_highlight);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherRegexp_get_match_at() _vt_TextMatcher
+
+#define _TextMatcherRegexp_get_match_at_BODY()\
+
+/*-
+    static int
+_txmrgxp_get_match_at(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherRegexp, get_match_at);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcherRegexp_T*
+new_TextMatcherRegexp()
+{
+TextMatcherRegexp_T* _txmrgxp = (TextMatcherRegexp_T*) alloc(sizeof(TextMatcherRegexp_T));
+if (! _txmrgxp)
+    return NULL;
+_txmrgxp_init(_txmrgxp);
+return _txmrgxp;
+}
+
+/* TmWordMatchExpr */
+#define _TmWordMatchExpr_init_BODY()\
+
+/*-
+    static void
+_tmwmxpr_init(_self)
+    void* _self;
+METHOD(TmWordMatchExpr, init);
+{
+END_METHOD
+}
+-*/
+
+#define _TmWordMatchExpr_destroy_BODY()\
+
+#define _TmWordMatchExpr_DESTROY() \
+
+/*-
+    static void
+_tmwmxpr_destroy(_self)
+    void* _self;
+METHOD(TmWordMatchExpr, destroy);
+{
+END_DESTROY(TmWordMatchExpr);
+}
+-*/
+
+#define _TmWordMatchExpr_add_word_start_BODY()\
+
+/*-
+    static void
+_tmwmxpr_add_word_start(_self, _word, yesno)
+    void* _self;
+    char_u* _word;
+    int yesno;
+METHOD(TmWordMatchExpr, add_word_start);
+{
+END_METHOD
+}
+-*/
+
+    TmWordMatchExpr_T*
+new_TmWordMatchExpr()
+{
+TmWordMatchExpr_T* _tmwmxpr = (TmWordMatchExpr_T*) alloc(sizeof(TmWordMatchExpr_T));
+if (! _tmwmxpr)
+    return NULL;
+_tmwmxpr_init(_tmwmxpr);
+return _tmwmxpr;
+}
+
+/* TextMatcherWords */
+#define _super_vt_TextMatcherWords_init() _vt_TextMatcher
+
+#define _TextMatcherWords_init_BODY()\
+    _txm_init(_self);\
+    self->op = &_vt_TextMatcherWords;\
+
+/*-
+    static void
+_txmwrds_init(_self)
+    void* _self;
+METHOD(TextMatcherWords, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherWords_destroy() _vt_TextMatcher
+
+#define _TextMatcherWords_destroy_BODY()\
+
+#define _TextMatcherWords_DESTROY() \
+    _txm_destroy(_self);\
+
+/*-
+    static void
+_txmwrds_destroy(_self)
+    void* _self;
+METHOD(TextMatcherWords, destroy);
+{
+END_DESTROY(TextMatcherWords);
+}
+-*/
+
+#define _TextMatcherWords_clear_words_BODY()\
+
+/*-
+    static void
+_txmwrds_clear_words(_self)
+    void* _self;
+METHOD(TextMatcherWords, clear_words);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherWords_set_search_str() _vt_TextMatcher
+
+#define _TextMatcherWords_set_search_str_BODY()\
+
+/*-
+    static void
+_txmwrds_set_search_str(_self, needle)
+    void* _self;
+    char_u* needle;
+METHOD(TextMatcherWords, set_search_str);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherWords_match() _vt_TextMatcher
+
+#define _TextMatcherWords_match_BODY()\
+
+/*-
+    static ulong
+_txmwrds_match(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherWords, match);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherWords_init_highlight() _vt_TextMatcher
+
+#define _TextMatcherWords_init_highlight_BODY()\
+
+/*-
+    static void
+_txmwrds_init_highlight(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherWords, init_highlight);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherWords_get_match_at() _vt_TextMatcher
+
+#define _TextMatcherWords_get_match_at_BODY()\
+
+/*-
+    static int
+_txmwrds_get_match_at(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherWords, get_match_at);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcherWords_T*
+new_TextMatcherWords()
+{
+TextMatcherWords_T* _txmwrds = (TextMatcherWords_T*) alloc(sizeof(TextMatcherWords_T));
+if (! _txmwrds)
+    return NULL;
+_txmwrds_init(_txmwrds);
+return _txmwrds;
+}
+
+/* TextMatcherCmdT */
+#define _super_vt_TextMatcherCmdT_init() _vt_TextMatcher
+
+#define _TextMatcherCmdT_init_BODY()\
+    _txm_init(_self);\
+    self->op = &_vt_TextMatcherCmdT;\
+
+/*-
+    static void
+_txmcmdt_init(_self)
+    void* _self;
+METHOD(TextMatcherCmdT, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherCmdT_destroy() _vt_TextMatcher
+
+#define _TextMatcherCmdT_destroy_BODY()\
+
+#define _TextMatcherCmdT_DESTROY() \
+    _txm_destroy(_self);\
+
+/*-
+    static void
+_txmcmdt_destroy(_self)
+    void* _self;
+METHOD(TextMatcherCmdT, destroy);
+{
+END_DESTROY(TextMatcherCmdT);
+}
+-*/
+
+#define _TextMatcherCmdT__clear_BODY()\
+
+/*-
+    static void
+_txmcmdt__clear(_self)
+    void* _self;
+METHOD(TextMatcherCmdT, _clear);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherCmdT_set_search_str() _vt_TextMatcher
+
+#define _TextMatcherCmdT_set_search_str_BODY()\
+
+/*-
+    static void
+_txmcmdt_set_search_str(_self, needle)
+    void* _self;
+    char_u* needle;
+METHOD(TextMatcherCmdT, set_search_str);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherCmdT_match() _vt_TextMatcher
+
+#define _TextMatcherCmdT_match_BODY()\
+
+/*-
+    static ulong
+_txmcmdt_match(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherCmdT, match);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcherCmdT__calc_pos_score_BODY()\
+
+/*-
+    static ulong
+_txmcmdt__calc_pos_score(_self, haystack, positions, npos)
+    void* _self;
+    char_u* haystack;
+    char_u** positions;
+    int npos;
+METHOD(TextMatcherCmdT, _calc_pos_score);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherCmdT_init_highlight() _vt_TextMatcher
+
+#define _TextMatcherCmdT_init_highlight_BODY()\
+
+/*-
+    static void
+_txmcmdt_init_highlight(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherCmdT, init_highlight);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherCmdT_get_match_at() _vt_TextMatcher
+
+#define _TextMatcherCmdT_get_match_at_BODY()\
+
+/*-
+    static int
+_txmcmdt_get_match_at(_self, haystack)
+    void* _self;
+    char_u* haystack;
+METHOD(TextMatcherCmdT, get_match_at);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcherCmdT_T*
+new_TextMatcherCmdT()
+{
+TextMatcherCmdT_T* _txmcmdt = (TextMatcherCmdT_T*) alloc(sizeof(TextMatcherCmdT_T));
+if (! _txmcmdt)
+    return NULL;
+_txmcmdt_init(_txmcmdt);
+return _txmcmdt;
+}
+
+/* TextMatcherFactoryEntry */
+#define _super_vt_TextMatcherFactoryEntry_init() _vt_Object
+
+#define _TextMatcherFactoryEntry_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_TextMatcherFactoryEntry;\
+
+/*-
+    static void
+_tmfent_init(_self)
+    void* _self;
+METHOD(TextMatcherFactoryEntry, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatcherFactoryEntry_destroy() _vt_Object
+
+#define _TextMatcherFactoryEntry_destroy_BODY()\
+
+#define _TextMatcherFactoryEntry_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_tmfent_destroy(_self)
+    void* _self;
+METHOD(TextMatcherFactoryEntry, destroy);
+{
+END_DESTROY(TextMatcherFactoryEntry);
+}
+-*/
+
+#define _TextMatcherFactoryEntry_set_BODY()\
+
+/*-
+    static void
+_tmfent_set(_self, name, fn_new)
+    void* _self;
+    char_u* name;
+    NewObject_Fn fn_new;
+METHOD(TextMatcherFactoryEntry, set);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcherFactoryEntry_T*
+new_TextMatcherFactoryEntry()
+{
+TextMatcherFactoryEntry_T* _tmfent = (TextMatcherFactoryEntry_T*) alloc(sizeof(TextMatcherFactoryEntry_T));
+if (! _tmfent)
+    return NULL;
+_tmfent_init(_tmfent);
+return _tmfent;
+}
+
+/* TextMatcherFactory */
+#define _TextMatcherFactory_init_BODY()\
+    self->op = &_vt_TextMatcherFactory;\
+
+/*-
+    static void
+_txmfac_init(_self)
+    void* _self;
+METHOD(TextMatcherFactory, init);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcherFactory_destroy_BODY()\
+
+#define _TextMatcherFactory_DESTROY() \
+
+/*-
+    static void
+_txmfac_destroy(_self)
+    void* _self;
+METHOD(TextMatcherFactory, destroy);
+{
+END_DESTROY(TextMatcherFactory);
+}
+-*/
+
+#define _TextMatcherFactory_create_matcher_BODY()\
+
+/*-
+    static TextMatcher_T*
+_txmfac_create_matcher(_self, name)
+    void* _self;
+    char_u* name;
+METHOD(TextMatcherFactory, create_matcher);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatcherFactory_next_matcher_BODY()\
+
+/*-
+    static char_u*
+_txmfac_next_matcher(_self, name)
+    void* _self;
+    char_u* name;
+METHOD(TextMatcherFactory, next_matcher);
+{
+END_METHOD
+}
+-*/
+
+    TextMatcherFactory_T*
+new_TextMatcherFactory()
+{
+TextMatcherFactory_T* _txmfac = (TextMatcherFactory_T*) alloc(sizeof(TextMatcherFactory_T));
+if (! _txmfac)
+    return NULL;
+_txmfac_init(_txmfac);
+return _txmfac;
+}
+
+/* ISearch */
+#define _ISearch_init_BODY()\
+    self->op = &_vt_ISearch;\
+
+/*-
+    static void
+_isrch_init(_self)
+    void* _self;
+METHOD(ISearch, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ISearch_destroy_BODY()\
+
+#define _ISearch_DESTROY() \
+
+/*-
+    static void
+_isrch_destroy(_self)
+    void* _self;
+METHOD(ISearch, destroy);
+{
+END_DESTROY(ISearch);
+}
+-*/
+
+#define _ISearch_set_matcher_BODY()\
+
+/*-
+    static void
+_isrch_set_matcher(_self, pmatcher)
+    void* _self;
+    TextMatcher_T* pmatcher;
+METHOD(ISearch, set_matcher);
+{
+END_METHOD
+}
+-*/
+
+#define _ISearch_set_text_BODY()\
+
+/*-
+    static void
+_isrch_set_text(_self, ptext)
+    void* _self;
+    char_u* ptext;
+METHOD(ISearch, set_text);
+{
+END_METHOD
+}
+-*/
+
+#define _ISearch_match_BODY()\
+
+/*-
+    static int
+_isrch_match(_self, ptext)
+    void* _self;
+    char_u* ptext;
+METHOD(ISearch, match);
+{
+END_METHOD
+}
+-*/
+
+    ISearch_T*
+new_ISearch()
+{
+ISearch_T* _isrch = (ISearch_T*) alloc(sizeof(ISearch_T));
+if (! _isrch)
+    return NULL;
+_isrch_init(_isrch);
+return _isrch;
+}
+
+/* FltComparator_Score */
+#define _super_vt_FltComparator_Score_init() _vt_ItemComparator
+
+#define _FltComparator_Score_init_BODY()\
+    _icmprtr_init(_self);\
+    self->op = &_vt_FltComparator_Score;\
+
+/*-
+    static void
+_flcmpscr_init(_self)
+    void* _self;
+METHOD(FltComparator_Score, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_FltComparator_Score_compare() _vt_ItemComparator
+
+#define _FltComparator_Score_compare_BODY()\
+
+/*-
+    static int
+_flcmpscr_compare(_self, pia, pib)
+    void* _self;
+    void* pia;
+    void* pib;
+METHOD(FltComparator_Score, compare);
+{
+END_METHOD
+}
+-*/
+
+    FltComparator_Score_T*
+new_FltComparator_Score()
+{
+FltComparator_Score_T* _flcmpscr = (FltComparator_Score_T*) alloc(sizeof(FltComparator_Score_T));
+if (! _flcmpscr)
+    return NULL;
+_flcmpscr_init(_flcmpscr);
+return _flcmpscr;
+}
+
+/* FltComparator_TitleScore */
+#define _super_vt_FltComparator_TitleScore_init() _vt_ItemComparator
+
+#define _FltComparator_TitleScore_init_BODY()\
+    _icmprtr_init(_self);\
+    self->op = &_vt_FltComparator_TitleScore;\
+
+/*-
+    static void
+_flcmpttsc_init(_self)
+    void* _self;
+METHOD(FltComparator_TitleScore, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_FltComparator_TitleScore_compare() _vt_ItemComparator
+
+#define _FltComparator_TitleScore_compare_BODY()\
+
+/*-
+    static int
+_flcmpttsc_compare(_self, pia, pib)
+    void* _self;
+    void* pia;
+    void* pib;
+METHOD(FltComparator_TitleScore, compare);
+{
+END_METHOD
+}
+-*/
+
+    FltComparator_TitleScore_T*
+new_FltComparator_TitleScore()
+{
+FltComparator_TitleScore_T* _flcmpttsc = (FltComparator_TitleScore_T*) alloc(sizeof(FltComparator_TitleScore_T));
+if (! _flcmpttsc)
+    return NULL;
+_flcmpttsc_init(_flcmpttsc);
+return _flcmpttsc;
+}
+
+/* ItemFilter */
+#define _ItemFilter_init_BODY()\
+    self->op = &_vt_ItemFilter;\
+
+/*-
+    static void
+_iflt_init(_self)
+    void* _self;
+METHOD(ItemFilter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_destroy_BODY()\
+
+#define _ItemFilter_DESTROY() \
+
+/*-
+    static void
+_iflt_destroy(_self)
+    void* _self;
+METHOD(ItemFilter, destroy);
+{
+END_DESTROY(ItemFilter);
+}
+-*/
+
+#define _ItemFilter_set_matcher_BODY()\
+
+/*-
+    static void
+_iflt_set_matcher(_self, pmatcher)
+    void* _self;
+    TextMatcher_T* pmatcher;
+METHOD(ItemFilter, set_matcher);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_set_text_BODY()\
+
+/*-
+    static void
+_iflt_set_text(_self, ptext)
+    void* _self;
+    char_u* ptext;
+METHOD(ItemFilter, set_text);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_filter_items_BODY()\
+
+/*-
+    static void
+_iflt_filter_items(_self)
+    void* _self;
+METHOD(ItemFilter, filter_items);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_get_item_count_BODY()\
+
+/*-
+    static int
+_iflt_get_item_count(_self)
+    void* _self;
+METHOD(ItemFilter, get_item_count);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_is_active_BODY()\
+
+/*-
+    static int
+_iflt_is_active(_self)
+    void* _self;
+METHOD(ItemFilter, is_active);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_get_model_index_BODY()\
+
+/*-
+    static int
+_iflt_get_model_index(_self, index)
+    void* _self;
+    int index;
+METHOD(ItemFilter, get_model_index);
+{
+END_METHOD
+}
+-*/
+
+#define _ItemFilter_get_index_of_BODY()\
+
+/*-
+    static int
+_iflt_get_index_of(_self, model_index)
+    void* _self;
+    int model_index;
+METHOD(ItemFilter, get_index_of);
+{
+END_METHOD
+}
+-*/
+
+    ItemFilter_T*
+new_ItemFilter()
+{
+ItemFilter_T* _iflt = (ItemFilter_T*) alloc(sizeof(ItemFilter_T));
+if (! _iflt)
+    return NULL;
+_iflt_init(_iflt);
+return _iflt;
+}
+
+/* BoxAligner */
+#define _super_vt_BoxAligner_init() _vt_Object
+
+#define _BoxAligner_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_BoxAligner;\
+
+/*-
+    static void
+_bxal_init(_self)
+    void* _self;
+METHOD(BoxAligner, init);
+{
+END_METHOD
+}
+-*/
+
+#define _BoxAligner_set_limits_BODY()\
+
+/*-
+    static void
+_bxal_set_limits(_self, left, top, right, bottom)
+    void* _self;
+    int left;
+    int top;
+    int right;
+    int bottom;
+METHOD(BoxAligner, set_limits);
+{
+END_METHOD
+}
+-*/
+
+#define _BoxAligner_parse_screen_pos_BODY()\
+
+/*-
+    static void
+_bxal_parse_screen_pos(_self, posdef)
+    void* _self;
+    char_u* posdef;
+METHOD(BoxAligner, parse_screen_pos);
+{
+END_METHOD
+}
+-*/
+
+#define _BoxAligner_set_align_params_BODY()\
+
+/*-
+    static void
+_bxal_set_align_params(_self, params)
+    void* _self;
+    dict_T* params;
+METHOD(BoxAligner, set_align_params);
+{
+END_METHOD
+}
+-*/
+
+#define _BoxAligner_align_BODY()\
+
+/*-
+    static void
+_bxal_align(_self, box, border)
+    void* _self;
+    Box_T* box;
+    WindowBorder_T* border;
+METHOD(BoxAligner, align);
+{
+END_METHOD
+}
+-*/
+
+    BoxAligner_T*
+new_BoxAligner()
+{
+BoxAligner_T* _bxal = (BoxAligner_T*) alloc(sizeof(BoxAligner_T));
+if (! _bxal)
+    return NULL;
+_bxal_init(_bxal);
+return _bxal;
+}
+
+/* SimpleKeymap */
+#define _super_vt_SimpleKeymap_init() _vt_Object
+
+#define _SimpleKeymap_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_SimpleKeymap;\
+
+/*-
+    static void
+_skmap_init(_self)
+    void* _self;
+METHOD(SimpleKeymap, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_SimpleKeymap_destroy() _vt_Object
+
+#define _SimpleKeymap_destroy_BODY()\
+
+#define _SimpleKeymap_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_skmap_destroy(_self)
+    void* _self;
+METHOD(SimpleKeymap, destroy);
+{
+END_DESTROY(SimpleKeymap);
+}
+-*/
+
+#define _SimpleKeymap_set_name_BODY()\
+
+/*-
+    static void
+_skmap_set_name(_self, name)
+    void* _self;
+    char_u* name;
+METHOD(SimpleKeymap, set_name);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_encode_key_BODY()\
+
+/*-
+    static char_u*
+_skmap_encode_key(_self, sequence)
+    void* _self;
+    char_u* sequence;
+METHOD(SimpleKeymap, encode_key);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_set_vim_key_BODY()\
+
+/*-
+    static void
+_skmap_set_vim_key(_self, sequence, command)
+    void* _self;
+    char_u* sequence;
+    char_u* command;
+METHOD(SimpleKeymap, set_vim_key);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_set_key_BODY()\
+
+/*-
+    static void
+_skmap_set_key(_self, sequence, command)
+    void* _self;
+    char_u* sequence;
+    char_u* command;
+METHOD(SimpleKeymap, set_key);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_get_command_BODY()\
+
+/*-
+    static char_u*
+_skmap_get_command(_self, sequence, copy)
+    void* _self;
+    char_u* sequence;
+    int copy;
+METHOD(SimpleKeymap, get_command);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_find_key_BODY()\
+
+/*-
+    static int
+_skmap_find_key(_self, sequence)
+    void* _self;
+    char_u* sequence;
+METHOD(SimpleKeymap, find_key);
+{
+END_METHOD
+}
+-*/
+
+#define _SimpleKeymap_clear_all_keys_BODY()\
+
+/*-
+    static void
+_skmap_clear_all_keys(_self)
+    void* _self;
+METHOD(SimpleKeymap, clear_all_keys);
+{
+END_METHOD
+}
+-*/
+
+    SimpleKeymap_T*
+new_SimpleKeymap()
+{
+SimpleKeymap_T* _skmap = (SimpleKeymap_T*) alloc(sizeof(SimpleKeymap_T));
+if (! _skmap)
+    return NULL;
+_skmap_init(_skmap);
+return _skmap;
+}
+
+/* WindowBorder */
+#define _super_vt_WindowBorder_init() _vt_Object
+
+#define _WindowBorder_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_WindowBorder;\
+
+/*-
+    static void
+_wbor_init(_self)
+    void* _self;
+METHOD(WindowBorder, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_WindowBorder_destroy() _vt_Object
+
+#define _WindowBorder_destroy_BODY()\
+
+#define _WindowBorder_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_wbor_destroy(_self)
+    void* _self;
+METHOD(WindowBorder, destroy);
+{
+END_DESTROY(WindowBorder);
+}
+-*/
+
+#define _WindowBorder_set_title_BODY()\
+
+/*-
+    static void
+_wbor_set_title(_self, title)
+    void* _self;
+    char_u* title;
+METHOD(WindowBorder, set_title);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_set_mode_text_BODY()\
+
+/*-
+    static void
+_wbor_set_mode_text(_self, mode)
+    void* _self;
+    char_u* mode;
+METHOD(WindowBorder, set_mode_text);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_set_input_active_BODY()\
+
+/*-
+    static void
+_wbor_set_input_active(_self, active)
+    void* _self;
+    int active;
+METHOD(WindowBorder, set_input_active);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_set_info_BODY()\
+
+/*-
+    static void
+_wbor_set_info(_self, text)
+    void* _self;
+    char_u* text;
+METHOD(WindowBorder, set_info);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_prepare_scrollbar_BODY()\
+
+/*-
+    static void
+_wbor_prepare_scrollbar(_self, item_count)
+    void* _self;
+    int item_count;
+METHOD(WindowBorder, prepare_scrollbar);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_get_scrollbar_kind_BODY()\
+
+/*-
+    static int
+_wbor_get_scrollbar_kind(_self, line, current)
+    void* _self;
+    int line;
+    int current;
+METHOD(WindowBorder, get_scrollbar_kind);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_draw_top_BODY()\
+
+/*-
+    static void
+_wbor_draw_top(_self)
+    void* _self;
+METHOD(WindowBorder, draw_top);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_draw_item_left_BODY()\
+
+/*-
+    static void
+_wbor_draw_item_left(_self, line, current)
+    void* _self;
+    int line;
+    int current;
+METHOD(WindowBorder, draw_item_left);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_draw_item_right_BODY()\
+
+/*-
+    static void
+_wbor_draw_item_right(_self, line, current)
+    void* _self;
+    int line;
+    int current;
+METHOD(WindowBorder, draw_item_right);
+{
+END_METHOD
+}
+-*/
+
+#define _WindowBorder_draw_bottom_BODY()\
+
+/*-
+    static void
+_wbor_draw_bottom(_self)
+    void* _self;
+METHOD(WindowBorder, draw_bottom);
+{
+END_METHOD
+}
+-*/
+
+    WindowBorder_T*
+new_WindowBorder()
+{
+WindowBorder_T* _wbor = (WindowBorder_T*) alloc(sizeof(WindowBorder_T));
+if (! _wbor)
+    return NULL;
+_wbor_init(_wbor);
+return _wbor;
+}
+
+/* PopupList */
+#define _PopupList_init_BODY()\
+    self->op = &_vt_PopupList;\
+
+/*-
+    static void
+_puls_init(_self)
+    void* _self;
+METHOD(PopupList, init);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_destroy_BODY()\
+
+#define _PopupList_DESTROY() \
+
+/*-
+    static void
+_puls_destroy(_self)
+    void* _self;
+METHOD(PopupList, destroy);
+{
+END_DESTROY(PopupList);
+}
+-*/
+
+#define _PopupList_set_model_BODY()\
+
+/*-
+    static void
+_puls_set_model(_self, model)
+    void* _self;
+    ItemProvider_T* model;
+METHOD(PopupList, set_model);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_read_options_BODY()\
+
+/*-
+    static void
+_puls_read_options(_self, options)
+    void* _self;
+    dict_T* options;
+METHOD(PopupList, read_options);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_default_keymap_BODY()\
+
+/*-
+    static void
+_puls_default_keymap(_self)
+    void* _self;
+METHOD(PopupList, default_keymap);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_map_keys_BODY()\
+
+/*-
+    static void
+_puls_map_keys(_self, kmap_name, kmap)
+    void* _self;
+    char_u* kmap_name;
+    dict_T* kmap;
+METHOD(PopupList, map_keys);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_calc_size_BODY()\
+
+/*-
+    static int
+_puls_calc_size(_self, limit_width, limit_height)
+    void* _self;
+    int limit_width;
+    int limit_height;
+METHOD(PopupList, calc_size);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_reposition_BODY()\
+
+/*-
+    static void
+_puls_reposition(_self)
+    void* _self;
+METHOD(PopupList, reposition);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_update_hl_chain_BODY()\
+
+/*-
+    static void
+_puls_update_hl_chain(_self)
+    void* _self;
+METHOD(PopupList, update_hl_chain);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_redraw_BODY()\
+
+/*-
+    static void
+_puls_redraw(_self)
+    void* _self;
+METHOD(PopupList, redraw);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_refilter_BODY()\
+
+/*-
+    static int
+_puls_refilter(_self, track_item, always_track)
+    void* _self;
+    int track_item;
+    int always_track;
+METHOD(PopupList, refilter);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_move_cursor_BODY()\
+
+/*-
+    static void
+_puls_move_cursor(_self)
+    void* _self;
+METHOD(PopupList, move_cursor);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_do_command_BODY()\
+
+/*-
+    static int
+_puls_do_command(_self, command)
+    void* _self;
+    char_u* command;
+METHOD(PopupList, do_command);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_switch_mode_BODY()\
+
+/*-
+    static void
+_puls_switch_mode(_self, modename)
+    void* _self;
+    char_u* modename;
+METHOD(PopupList, switch_mode);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_prepare_result_BODY()\
+
+/*-
+    static void
+_puls_prepare_result(_self, result)
+    void* _self;
+    dict_T* result;
+METHOD(PopupList, prepare_result);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_save_state_BODY()\
+
+/*-
+    static void
+_puls_save_state(_self, result)
+    void* _self;
+    dict_T* result;
+METHOD(PopupList, save_state);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_set_title_BODY()\
+
+/*-
+    static void
+_puls_set_title(_self, title)
+    void* _self;
+    char_u* title;
+METHOD(PopupList, set_title);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_set_current_BODY()\
+
+/*-
+    static void
+_puls_set_current(_self, index)
+    void* _self;
+    int index;
+METHOD(PopupList, set_current);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_do_isearch_BODY()\
+
+/*-
+    static int
+_puls_do_isearch(_self, dir)
+    void* _self;
+    int dir;
+METHOD(PopupList, do_isearch);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_on_filter_change_BODY()\
+
+/*-
+    static int
+_puls_on_filter_change(_self, data)
+    void* _self;
+    void* data;
+METHOD(PopupList, on_filter_change);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_on_isearch_change_BODY()\
+
+/*-
+    static int
+_puls_on_isearch_change(_self, data)
+    void* _self;
+    void* data;
+METHOD(PopupList, on_isearch_change);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_on_model_title_changed_BODY()\
+
+/*-
+    static int
+_puls_on_model_title_changed(_self, data)
+    void* _self;
+    void* data;
+METHOD(PopupList, on_model_title_changed);
+{
+END_METHOD
+}
+-*/
+
+#define _PopupList_process_command_BODY()\
+
+/*-
+    static int
+_puls_process_command(_self, command)
+    void* _self;
+    char_u* command;
+METHOD(PopupList, process_command);
+{
+END_METHOD
+}
+-*/
+
+    PopupList_T*
+new_PopupList()
+{
+PopupList_T* _puls = (PopupList_T*) alloc(sizeof(PopupList_T));
+if (! _puls)
+    return NULL;
+_puls_init(_puls);
+return _puls;
+}
+
+/* BufferItemProvider */
+#ifdef FEAT_POPUPLIST_BUFFERS
+#define _super_vt_BufferItemProvider_init() _vt_ItemProvider
+
+#define _BufferItemProvider_init_BODY()\
+    _iprov_init(_self);\
+    self->op = &_vt_BufferItemProvider;\
+
+/*-
+    static void
+_bprov_init(_self)
+    void* _self;
+METHOD(BufferItemProvider, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_read_options() _vt_ItemProvider
+
+#define _BufferItemProvider_read_options_BODY()\
+
+/*-
+    static void
+_bprov_read_options(_self, options)
+    void* _self;
+    dict_T* options;
+METHOD(BufferItemProvider, read_options);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_on_start() _vt_ItemProvider
+
+#define _BufferItemProvider_on_start_BODY()\
+
+/*-
+    static void
+_bprov_on_start(_self)
+    void* _self;
+METHOD(BufferItemProvider, on_start);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_default_keymap() _vt_ItemProvider
+
+#define _BufferItemProvider_default_keymap_BODY()\
+
+/*-
+    static void
+_bprov_default_keymap(_self, puls)
+    void* _self;
+    PopupList_T* puls;
+METHOD(BufferItemProvider, default_keymap);
+{
+END_METHOD
+}
+-*/
+
+#define _BufferItemProvider_list_buffers_BODY()\
+
+/*-
+    static void
+_bprov_list_buffers(_self)
+    void* _self;
+METHOD(BufferItemProvider, list_buffers);
+{
+END_METHOD
+}
+-*/
+
+#define _BufferItemProvider_sort_buffers_BODY()\
+
+/*-
+    static int
+_bprov_sort_buffers(_self)
+    void* _self;
+METHOD(BufferItemProvider, sort_buffers);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_get_title() _vt_ItemProvider
+
+#define _BufferItemProvider_get_title_BODY()\
+
+/*-
+    static char_u*
+_bprov_get_title(_self)
+    void* _self;
+METHOD(BufferItemProvider, get_title);
+{
+END_METHOD
+}
+-*/
+
+#define _BufferItemProvider__index_to_bufnr_BODY()\
+
+/*-
+    static int
+_bprov__index_to_bufnr(_self, index)
+    void* _self;
+    int index;
+METHOD(BufferItemProvider, _index_to_bufnr);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_update_result() _vt_ItemProvider
+
+#define _BufferItemProvider_update_result_BODY()\
+
+/*-
+    static void
+_bprov_update_result(_self, status)
+    void* _self;
+    dict_T* status;
+METHOD(BufferItemProvider, update_result);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_BufferItemProvider_handle_command() _vt_ItemProvider
+
+#define _BufferItemProvider_handle_command_BODY()\
+
+/*-
+    static char_u*
+_bprov_handle_command(_self, puls, command)
+    void* _self;
+    PopupList_T* puls;
+    char_u* command;
+METHOD(BufferItemProvider, handle_command);
+{
+END_METHOD
+}
+-*/
+
+    BufferItemProvider_T*
+new_BufferItemProvider()
+{
+BufferItemProvider_T* _bprov = (BufferItemProvider_T*) alloc(sizeof(BufferItemProvider_T));
+if (! _bprov)
+    return NULL;
+_bprov_init(_bprov);
+return _bprov;
+}
+#endif /* FEAT_POPUPLIST_BUFFERS */
+
+/* MenuItemProvider */
+#ifdef FEAT_POPUPLIST_MENUS
+#define _super_vt_MenuItemProvider_init() _vt_ItemProvider
+
+#define _MenuItemProvider_init_BODY()\
+    _iprov_init(_self);\
+    self->op = &_vt_MenuItemProvider;\
+
+/*-
+    static void
+_mnupr_init(_self)
+    void* _self;
+METHOD(MenuItemProvider, init);
+{
+END_METHOD
+}
+-*/
+
+#define _MenuItemProvider_find_menu_BODY()\
+
+/*-
+    static void
+_mnupr_find_menu(_self, menu_path)
+    void* _self;
+    char_u* menu_path;
+METHOD(MenuItemProvider, find_menu);
+{
+END_METHOD
+}
+-*/
+
+#define _MenuItemProvider_update_title_BODY()\
+
+/*-
+    static void
+_mnupr_update_title(_self)
+    void* _self;
+METHOD(MenuItemProvider, update_title);
+{
+END_METHOD
+}
+-*/
+
+#define _MenuItemProvider_parse_mode_BODY()\
+
+/*-
+    static int
+_mnupr_parse_mode(_self, command)
+    void* _self;
+    char_u* command;
+METHOD(MenuItemProvider, parse_mode);
+{
+END_METHOD
+}
+-*/
+
+#define _MenuItemProvider_list_items_BODY()\
+
+/*-
+    static int
+_mnupr_list_items(_self, selected)
+    void* _self;
+    void* selected;
+METHOD(MenuItemProvider, list_items);
+{
+END_METHOD
+}
+-*/
+
+#define _MenuItemProvider__list_items_r_BODY()\
+
+/*-
+    static int
+_mnupr__list_items_r(_self, menu, selected, count, level)
+    void* _self;
+    vimmenu_T* menu;
+    void* selected;
+    int* count;
+    int level;
+METHOD(MenuItemProvider, _list_items_r);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_MenuItemProvider_select_item() _vt_ItemProvider
+
+#define _MenuItemProvider_select_item_BODY()\
+
+/*-
+    static int
+_mnupr_select_item(_self, item)
+    void* _self;
+    int item;
+METHOD(MenuItemProvider, select_item);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_MenuItemProvider_select_parent() _vt_ItemProvider
+
+#define _MenuItemProvider_select_parent_BODY()\
+
+/*-
+    static int
+_mnupr_select_parent(_self)
+    void* _self;
+METHOD(MenuItemProvider, select_parent);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_MenuItemProvider_default_keymap() _vt_ItemProvider
+
+#define _MenuItemProvider_default_keymap_BODY()\
+
+/*-
+    static void
+_mnupr_default_keymap(_self, puls)
+    void* _self;
+    PopupList_T* puls;
+METHOD(MenuItemProvider, default_keymap);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_MenuItemProvider_handle_command() _vt_ItemProvider
+
+#define _MenuItemProvider_handle_command_BODY()\
+
+/*-
+    static char_u*
+_mnupr_handle_command(_self, puls, command)
+    void* _self;
+    PopupList_T* puls;
+    char_u* command;
+METHOD(MenuItemProvider, handle_command);
+{
+END_METHOD
+}
+-*/
+
+    MenuItemProvider_T*
+new_MenuItemProvider()
+{
+MenuItemProvider_T* _mnupr = (MenuItemProvider_T*) alloc(sizeof(MenuItemProvider_T));
+if (! _mnupr)
+    return NULL;
+_mnupr_init(_mnupr);
+return _mnupr;
+}
+#endif /* FEAT_POPUPLIST_MENUS */
+
+/* QuickfixItemProvider */
+#define _super_vt_QuickfixItemProvider_init() _vt_ItemProvider
+
+#define _QuickfixItemProvider_init_BODY()\
+    _iprov_init(_self);\
+    self->op = &_vt_QuickfixItemProvider;\
+
+/*-
+    static void
+_qfxpr_init(_self)
+    void* _self;
+METHOD(QuickfixItemProvider, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_QuickfixItemProvider_destroy() _vt_ItemProvider
+
+#define _QuickfixItemProvider_destroy_BODY()\
+
+#define _QuickfixItemProvider_DESTROY() \
+    _iprov_destroy(_self);\
+
+/*-
+    static void
+_qfxpr_destroy(_self)
+    void* _self;
+METHOD(QuickfixItemProvider, destroy);
+{
+END_DESTROY(QuickfixItemProvider);
+}
+-*/
+
+#define _super_vt_QuickfixItemProvider_get_display_text() _vt_ItemProvider
+
+#define _QuickfixItemProvider_get_display_text_BODY()\
+
+/*-
+    static char_u*
+_qfxpr_get_display_text(_self, item)
+    void* _self;
+    int item;
+METHOD(QuickfixItemProvider, get_display_text);
+{
+END_METHOD
+}
+-*/
+
+#define _QuickfixItemProvider_list_items_BODY()\
+
+/*-
+    static int
+_qfxpr_list_items(_self)
+    void* _self;
+METHOD(QuickfixItemProvider, list_items);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_QuickfixItemProvider_on_start() _vt_ItemProvider
+
+#define _QuickfixItemProvider_on_start_BODY()\
+
+/*-
+    static void
+_qfxpr_on_start(_self)
+    void* _self;
+METHOD(QuickfixItemProvider, on_start);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_QuickfixItemProvider_select_item() _vt_ItemProvider
+
+#define _QuickfixItemProvider_select_item_BODY()\
+
+/*-
+    static int
+_qfxpr_select_item(_self, item)
+    void* _self;
+    int item;
+METHOD(QuickfixItemProvider, select_item);
+{
+END_METHOD
+}
+-*/
+
+#define _QuickfixItemProvider__prepare_dispbuf_BODY()\
+
+/*-
+    static int
+_qfxpr__prepare_dispbuf(_self, len)
+    void* _self;
+    int len;
+METHOD(QuickfixItemProvider, _prepare_dispbuf);
+{
+END_METHOD
+}
+-*/
+
+#define _QuickfixItemProvider__update_title_BODY()\
+
+/*-
+    static void
+_qfxpr__update_title(_self)
+    void* _self;
+METHOD(QuickfixItemProvider, _update_title);
+{
+END_METHOD
+}
+-*/
+
+#define _QuickfixItemProvider__display_item_BODY()\
+
+/*-
+    static int
+_qfxpr__display_item(_self, pitem)
+    void* _self;
+    PopupItem_T* pitem;
+METHOD(QuickfixItemProvider, _display_item);
+{
+END_METHOD
+}
+-*/
+
+    QuickfixItemProvider_T*
+new_QuickfixItemProvider()
+{
+QuickfixItemProvider_T* _qfxpr = (QuickfixItemProvider_T*) alloc(sizeof(QuickfixItemProvider_T));
+if (! _qfxpr)
+    return NULL;
+_qfxpr_init(_qfxpr);
+return _qfxpr;
+}
+
+/* LineWriter */
+#define _super_vt_LineWriter_init() _vt_Object
+
+#define _LineWriter_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_LineWriter;\
+
+/*-
+    static void
+_plwr_init(_self)
+    void* _self;
+METHOD(LineWriter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _LineWriter_add_fixed_tab_BODY()\
+
+/*-
+    static void
+_plwr_add_fixed_tab(_self, col)
+    void* _self;
+    int col;
+METHOD(LineWriter, add_fixed_tab);
+{
+END_METHOD
+}
+-*/
+
+#define _LineWriter_get_tab_size_at_BODY()\
+
+/*-
+    static int
+_plwr_get_tab_size_at(_self, col)
+    void* _self;
+    int col;
+METHOD(LineWriter, get_tab_size_at);
+{
+END_METHOD
+}
+-*/
+
+#define _LineWriter_set_limits_BODY()\
+
+/*-
+    static void
+_plwr_set_limits(_self, min_col, max_col)
+    void* _self;
+    int min_col;
+    int max_col;
+METHOD(LineWriter, set_limits);
+{
+END_METHOD
+}
+-*/
+
+#define _LineWriter_write_line_BODY()\
+
+/*-
+    static void
+_plwr_write_line(_self, text, row, attr, fillChar)
+    void* _self;
+    char_u* text;
+    int row;
+    int attr;
+    int fillChar;
+METHOD(LineWriter, write_line);
+{
+END_METHOD
+}
+-*/
+
+    LineWriter_T*
+new_LineWriter()
+{
+LineWriter_T* _plwr = (LineWriter_T*) alloc(sizeof(LineWriter_T));
+if (! _plwr)
+    return NULL;
+_plwr_init(_plwr);
+return _plwr;
+}
+
+/* Highlighter */
+#define _super_vt_Highlighter_init() _vt_Object
+
+#define _Highlighter_init_BODY()\
+    _OOC_OBJECT_init(_self);\
+    self->op = &_vt_Highlighter;\
+
+/*-
+    static void
+_hltr_init(_self)
+    void* _self;
+METHOD(Highlighter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _Highlighter_bol_init_BODY()\
+
+/*-
+    static void
+_hltr_bol_init(_self, text, extra_data)
+    void* _self;
+    char_u* text;
+    void* extra_data;
+METHOD(Highlighter, bol_init);
+{
+END_METHOD
+}
+-*/
+
+#define _Highlighter_calc_attr_BODY()\
+
+/*-
+    static int
+_hltr_calc_attr(_self, next_char)
+    void* _self;
+    char_u* next_char;
+METHOD(Highlighter, calc_attr);
+{
+END_METHOD
+}
+-*/
+
+    Highlighter_T*
+new_Highlighter()
+{
+Highlighter_T* _hltr = (Highlighter_T*) alloc(sizeof(Highlighter_T));
+if (! _hltr)
+    return NULL;
+_hltr_init(_hltr);
+return _hltr;
+}
+
+/* ShortcutHighlighter */
+#define _super_vt_ShortcutHighlighter_init() _vt_Highlighter
+
+#define _ShortcutHighlighter_init_BODY()\
+    _hltr_init(_self);\
+    self->op = &_vt_ShortcutHighlighter;\
+
+/*-
+    static void
+_hlshrt_init(_self)
+    void* _self;
+METHOD(ShortcutHighlighter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_ShortcutHighlighter_calc_attr() _vt_Highlighter
+
+#define _ShortcutHighlighter_calc_attr_BODY()\
+
+/*-
+    static int
+_hlshrt_calc_attr(_self, next_char)
+    void* _self;
+    char_u* next_char;
+METHOD(ShortcutHighlighter, calc_attr);
+{
+END_METHOD
+}
+-*/
+
+    ShortcutHighlighter_T*
+new_ShortcutHighlighter()
+{
+ShortcutHighlighter_T* _hlshrt = (ShortcutHighlighter_T*) alloc(sizeof(ShortcutHighlighter_T));
+if (! _hlshrt)
+    return NULL;
+_hlshrt_init(_hlshrt);
+return _hlshrt;
+}
+
+/* TextMatchHighlighter */
+#define _super_vt_TextMatchHighlighter_init() _vt_Highlighter
+
+#define _TextMatchHighlighter_init_BODY()\
+    _hltr_init(_self);\
+    self->op = &_vt_TextMatchHighlighter;\
+
+/*-
+    static void
+_hltxm_init(_self)
+    void* _self;
+METHOD(TextMatchHighlighter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _TextMatchHighlighter_set_matcher_BODY()\
+
+/*-
+    static void
+_hltxm_set_matcher(_self, matcher)
+    void* _self;
+    TextMatcher_T* matcher;
+METHOD(TextMatchHighlighter, set_matcher);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatchHighlighter_bol_init() _vt_Highlighter
+
+#define _TextMatchHighlighter_bol_init_BODY()\
+
+/*-
+    static void
+_hltxm_bol_init(_self, text, extra_data)
+    void* _self;
+    char_u* text;
+    void* extra_data;
+METHOD(TextMatchHighlighter, bol_init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_TextMatchHighlighter_calc_attr() _vt_Highlighter
+
+#define _TextMatchHighlighter_calc_attr_BODY()\
+
+/*-
+    static int
+_hltxm_calc_attr(_self, next_char)
+    void* _self;
+    char_u* next_char;
+METHOD(TextMatchHighlighter, calc_attr);
+{
+END_METHOD
+}
+-*/
+
+    TextMatchHighlighter_T*
+new_TextMatchHighlighter()
+{
+TextMatchHighlighter_T* _hltxm = (TextMatchHighlighter_T*) alloc(sizeof(TextMatchHighlighter_T));
+if (! _hltxm)
+    return NULL;
+_hltxm_init(_hltxm);
+return _hltxm;
+}
+
+/* LineHighlightWriter */
+#define _super_vt_LineHighlightWriter_init() _vt_LineWriter
+
+#define _LineHighlightWriter_init_BODY()\
+    _plwr_init(_self);\
+    self->op = &_vt_LineHighlightWriter;\
+
+/*-
+    static void
+_plhlwr_init(_self)
+    void* _self;
+METHOD(LineHighlightWriter, init);
+{
+END_METHOD
+}
+-*/
+
+#define _super_vt_LineHighlightWriter_destroy() _vt_LineWriter
+
+#define _LineHighlightWriter_destroy_BODY()\
+
+#define _LineHighlightWriter_DESTROY() \
+    _OOC_OBJECT_destroy(_self);\
+
+/*-
+    static void
+_plhlwr_destroy(_self)
+    void* _self;
+METHOD(LineHighlightWriter, destroy);
+{
+END_DESTROY(LineHighlightWriter);
+}
+-*/
+
+#define _super_vt_LineHighlightWriter_write_line() _vt_LineWriter
+
+#define _LineHighlightWriter_write_line_BODY()\
+
+/*-
+    static void
+_plhlwr_write_line(_self, text, row, init_attr, fillChar)
+    void* _self;
+    char_u* text;
+    int row;
+    int init_attr;
+    int fillChar;
+METHOD(LineHighlightWriter, write_line);
+{
+END_METHOD
+}
+-*/
+
+#define _LineHighlightWriter__flush_BODY()\
+
+/*-
+    static int
+_plhlwr__flush(_self, text_end, row, col, attr)
+    void* _self;
+    char_u* text_end;
+    int row;
+    int col;
+    int attr;
+METHOD(LineHighlightWriter, _flush);
+{
+END_METHOD
+}
+-*/
+
+    LineHighlightWriter_T*
+new_LineHighlightWriter()
+{
+LineHighlightWriter_T* _plhlwr = (LineHighlightWriter_T*) alloc(sizeof(LineHighlightWriter_T));
+if (! _plhlwr)
+    return NULL;
+_plhlwr_init(_plhlwr);
+return _plhlwr;
+}
+

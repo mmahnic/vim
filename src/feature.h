@@ -1189,11 +1189,27 @@
  * +lua			Lua interface: "--enable-luainterp"
  * +mzscheme		MzScheme interface: "--enable-mzscheme"
  * +perl		Perl interface: "--enable-perlinterp"
+ * +popuplist		Popup list: "--enable-popuplist"
  * +python		Python interface: "--enable-pythoninterp"
  * +tcl			TCL interface: "--enable-tclinterp"
  * +netbeans_intg	Netbeans integration
  * +channel		Inter process communication
  */
+
+/* 
+ * The popup list depends on some features.
+ * We disable the parts that can't be built.
+ */
+#if defined(FEAT_POPUPLIST) && !defined(FEAT_EVAL)
+# undef FEAT_POPUPLIST
+#endif
+#if !defined(FEAT_POPUPLIST)
+# undef FEAT_POPUPLIST_BUFFERS
+# undef FEAT_POPUPLIST_MENUS
+#endif
+#if defined(FEAT_POPUPLIST_MENUS) && !defined(FEAT_MENU)
+# undef FEAT_POPUPLIST_MENUS
+#endif
 
 /*
  * These features are automatically detected:
