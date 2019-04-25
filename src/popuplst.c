@@ -105,7 +105,7 @@ pulslog(char* fmt, ...)
     listitem_T	*item;
 
     va_start(ap, fmt);
-    str_l = vim_vsnprintf(&buf[0], 128, fmt, ap, NULL);
+    str_l = vim_vsnprintf(&buf[0], 128, fmt, ap);
     va_end(ap);
 
     item = (listitem_T*) alloc(sizeof(listitem_T));
@@ -1548,7 +1548,7 @@ _lned_backspace(_self)
 	return 0;
 
     last_char = self->text + STRLEN(self->text);
-    mb_ptr_back(self->text, last_char);
+    MB_PTR_BACK(self->text, last_char);
     *last_char = NUL;
     return 1;
     END_METHOD;
@@ -3313,7 +3313,7 @@ _skmap_set_key(_self, sequence, command)
     pi = dict_find(self->key2cmd, sequence, -1);
     if (pi)
 	dictitem_remove(self->key2cmd, pi);
-    dict_add_nr_str(self->key2cmd, (char*)sequence, 0, command);
+    dict_add_string(self->key2cmd, (char*)sequence, command);
     END_METHOD;
 }
 
@@ -4284,7 +4284,7 @@ _puls_prepare_result(_self, result)
 	return;
     idx = self->filter->op->get_model_index(self->filter, self->current);
     item_count = self->model->op->get_item_count(self->model);
-    dict_add_nr_str(result, "current", idx, NULL);
+    dict_add_number(result, "current", idx);
     marked = list_alloc();
 
     tv.v_type = VAR_NUMBER;
@@ -4315,8 +4315,8 @@ _puls_save_state(_self, result)
     METHOD(PopupList, save_state);
 {
     dict_T  *d = dict_alloc();
-    dict_add_nr_str(d, "isearch_matcher", 0, self->isearch_matcher_name);
-    dict_add_nr_str(d, "filter_matcher", 0, self->filter_matcher_name);
+    dict_add_string(d, "isearch_matcher", self->isearch_matcher_name);
+    dict_add_string(d, "filter_matcher", self->filter_matcher_name);
     _dict_add_dict(result, "state", d);
     END_METHOD;
 }
@@ -5570,9 +5570,9 @@ _puls_test_loop(pplist, rettv)
 	    LOG(("Terminated by 'sigint'"));
 	}
 
-	dict_add_nr_str(dstate, "status", 0, command);
+	dict_add_string(dstate, "status", command);
 	if (pplist->modemap)
-	    dict_add_nr_str(dstate, "mode", 0, pplist->modemap->name);
+	    dict_add_string(dstate, "mode", pplist->modemap->name);
 
 	if (EQUALS(command, "accept") || STARTSWITH(command, "accept:"))
 	{
@@ -5581,7 +5581,7 @@ _puls_test_loop(pplist, rettv)
 	}
 	else if (EQUALS(command, cmd_quit) || STARTSWITH(command, "done:"))
 	{
-	    dict_add_nr_str(dstate, "current", pplist->current, NULL);
+	    dict_add_number(dstate, "current", pplist->current);
 	    pplist->op->save_state(pplist, dstate);
 	}
     }

@@ -335,7 +335,7 @@ _hlshrt_calc_attr(_self, next_char)
 	rv = 1;
     }
 
-    if (*next_char == '&' && !vim_iswhite(*(next_char+1)))
+    if (*next_char == '&' && !VIM_ISWHITE(*(next_char+1)))
     {
 	self->state = 1;
 	self->text_width = 0;
